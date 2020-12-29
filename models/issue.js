@@ -1,0 +1,34 @@
+module.exports=function async(sequelize,DataTypes){
+    return sequelize.define('Issue',{
+        category:{
+            type:DataTypes.INTEGER,
+        },
+        title:{
+            type:DataTypes.STRING,
+        },
+        contents:{
+            type:DataTypes.STRING,
+        },
+        issue_img:{
+            type:DataTypes.STRING,
+        },
+        solution:{
+            type:DataTypes.STRING,
+        },
+        solution_date:{
+            type:DataTypes.STRING,
+        },
+        solution_time:{
+            type:DataTypes.STRING,
+        },
+        solution_message:{
+            type:DataTypes.STRING,
+        },
+        reply:{
+            type:DataTypes.STRING,
+        },
+        fix:{
+            type:DataTypes.BOOLEAN,
+        }
+    })
+}
