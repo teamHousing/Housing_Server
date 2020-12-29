@@ -10,4 +10,13 @@ if (config.use_env_variable) {
 }
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
+db.User = require('./user')(sequelize,Sequelize)
+db.Issue = require('./issue')(sequelize,Sequelize)
+db.HouseInfo = require('./houseInfo')(sequelize,Sequelize)
+db.Notice = require('./notice')(sequelize,Sequelize)
+
+db.HouseInfo.hasMany(db.Notice,{onDelete:'cascade'})
+db.Notice.belongsTo(db.HouseInfo)
+
 module.exports = db;
