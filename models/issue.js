@@ -1,6 +1,6 @@
 module.exports=function async(sequelize,DataTypes){
     return sequelize.define('Issue',{
-        category:{ //문의 종류
+        category:{ //문의 종류(ex: 고장수리-1/ 계약관련-2/ 요금납부-3/ 소음관련-4/ 문의사항-5/ 그외-6)
             type:DataTypes.INTEGER,
         },
         title:{ //문의 제목
@@ -11,14 +11,21 @@ module.exports=function async(sequelize,DataTypes){
         },
         issue_img:{ //문의 이미지
             type:DataTypes.STRING,
+            set:function(val){
+                return this.setDataValue('issue_img',JSON.stringify(val))
+            },
+            get:function(){
+                return JSON.parse(this.getDataValue('issue_img'))
+            },
+            defaultValue:"[]"
         },
         requested_term:{ //요청사항
             type:DataTypes.STRING,
         },
-        progress:{ //문의 진행사항(확인전-1, 확인중-2, 확인완료-3)
+        progress:{ //문의 진행사항(확인전-0, 확인중-1, 확인완료-2)
             type:DataTypes.INTEGER,
         },
-        promise_solution:{ //문의 약속 해결방법(ex: 고장수리-1/ 계약관련-2/ 요금납부-3/ 소음관련-4/ 문의사항-5/ 그외-6)
+        promise_solution:{ //문의 약속 해결방법(만나서 : 0/ 전화로:1)
             type:DataTypes.INTEGER,
         },
         promise_date:{ //문의 약속 날짜
@@ -26,10 +33,16 @@ module.exports=function async(sequelize,DataTypes){
         },
         promise_time_hope:{ //문의 약속 희망 시간
             type:DataTypes.STRING,
+            set:function(val){
+                return this.setDataValue('promise_time_hope',JSON.stringify(val))
+            },
+            get:function(){
+                return JSON.parse(this.getDataValue('promise_date'))
+            }
         },
-        reply:{
-            type:DataTypes.STRING,
-        },
+        promise_time_solution:{
+            type:DataTypes.STRING
+        }
     },{
         freezeTableName:true,
         timestamp:true,
