@@ -11,12 +11,17 @@ if (config.use_env_variable) {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.User = require('./user')(sequelize,Sequelize)
-db.Issue = require('./issue')(sequelize,Sequelize)
-db.HouseInfo = require('./houseInfo')(sequelize,Sequelize)
-db.Notice = require('./notice')(sequelize,Sequelize)
+db.User = require('./user')(sequelize,Sequelize) //사용자
+db.Issue = require('./issue')(sequelize,Sequelize) //소통(문의)
+db.HouseInfo = require('./houseInfo')(sequelize,Sequelize) //집정보
+db.Notice = require('./notice')(sequelize,Sequelize) //공지사항
 
+//1:N *HouseInfo : Notice
 db.HouseInfo.hasMany(db.Notice,{onDelete:'cascade'})
 db.Notice.belongsTo(db.HouseInfo)
+
+//1:N *User : Issue
+db.User.hasMany(db.Issue,{onDelete:'cascade'})
+db.Issue.belongsTo(db.User)
 
 module.exports = db;
