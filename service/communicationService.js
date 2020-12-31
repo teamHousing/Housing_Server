@@ -1,8 +1,14 @@
 const {Issue} = require('../models')
 const sequelize = require('sequelize')
 const Op = sequelize.Op
+const moment = require('moment')
+
 module.exports={
     getCommunicationList:async()=>{
+        const time = moment("2019-12-30").format("YYYY-MM-DD HH:mm")
+        console.log(time)
+        console.log(typeof time)
+        console.log(moment(time))
         const issueList = {}
         const completeList = await Issue.findAll({where:{progress:{[Op.lt]:2}},attributes:['id','title','contents','progress']})
         const incompleteList = await Issue.findAll({where:{progress:2},attributes:['id','title','contents','progress']})
@@ -19,7 +25,7 @@ module.exports={
         return issueDetail
     },
     setIssue:async({is_promise,category,title,contents,requested_term,promise_solution,promise_date,promise_time_hope,promise_option},issue_img)=>{
-        const addIssue = await Issue.create({category,title,contents,requested_term,promise_solution,promise_date,promise_time_hope,promise_option,issue_img,progress:0})
+        const addIssue = await Issue.create({category,title,contents,requested_term,promise_solution,promise_date,promise_time_hope,promise_option,issue_img,progress:0,is_promise})
         console.log(addIssue)
     }
 }
