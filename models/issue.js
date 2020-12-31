@@ -40,9 +40,13 @@ module.exports=function async(sequelize,DataTypes){
                 return JSON.parse(this.getDataValue('promise_date'))
             }
         },
-        promise_time_solution:{
+        promise_option:{ //문의 약속 선택 사항
+            type:DataTypes.STRING,
+            defaultValue:'[]'
+        },
+        promise_time_solution:{ //문의 약속 확정 시간
             type:DataTypes.STRING
-        }
+        },
     },{
         freezeTableName:true,
         timestamp:true,
