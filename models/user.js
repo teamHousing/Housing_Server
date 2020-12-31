@@ -18,11 +18,12 @@ module.exports=function async(sequelize,DataTypes){
         unit:{
             type:DataTypes.STRING
         },
-        type:{
+        type:{ //사용자구분(집주인:0, 자취생:1)
             type:DataTypes.INTEGER
         }
     },{
         freezeTableName:true,
-        timestamps:true
+        timestamps:true,
+        underscored:true
     })
 }

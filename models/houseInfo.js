@@ -17,6 +17,7 @@ module.exports=function async(sequelize,DataTypes){
         }
     },{
         freezeTableName:true,
-        timestamps:true
+        timestamps:true,
+        underscored:true
     })
 }
