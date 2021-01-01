@@ -1,7 +1,7 @@
 const moment = require('moment')
 module.exports=function async(sequelize,DataTypes){
     return sequelize.define('Issue',{
-        category:{ //문의 종류(ex: 고장수리-1/ 계약관련-2/ 요금납부-3/ 소음관련-4/ 문의사항-5/ 그외-6)
+        category:{ //문의 종류(ex: 고장수리-0/ 계약관련-1/ 요금납부-2/ 소음관련-3/ 문의사항-4/ 그외-5)
             type:DataTypes.INTEGER,
         },
         title:{ //문의 제목
@@ -26,10 +26,10 @@ module.exports=function async(sequelize,DataTypes){
         progress:{ //문의 진행사항(확인전-0, 확인중-1, 확인완료-2)
             type:DataTypes.INTEGER,
         },
-        is_promise:{
+        is_promise:{ // 문의의 약속여부 tinyint 0:false, 1:true
             type:DataTypes.BOOLEAN,
         },
-        promise_solution:{ //문의 약속 해결방법(만나서 : 0/ 전화로:1)
+        solution_method:{ //문의 약속 해결방법(만나서 : 0/ 전화로:1)
             type:DataTypes.INTEGER,
         },
         promise_date:{ //문의 약속 날짜
@@ -52,7 +52,8 @@ module.exports=function async(sequelize,DataTypes){
             defaultValue:'[]'
         },
         promise_time_solution:{ //문의 약속 확정 시간
-            type:DataTypes.STRING
+            type:DataTypes.STRING,
+            defaultValue:""
         },
     },{
         freezeTableName:true,

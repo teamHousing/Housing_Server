@@ -26,11 +26,16 @@ module.exports={
     //소통하기 문의 등록
     setIssue:async(req,res)=>{
         const issue_img = req.files.map(files=>files.location)
-        const {is_promise,category,title,contents,requested_term,promise_solution,promise_date,promise_time_hope,promise_option} = req.body
-        if(!category||!title||!contents||!requested_term||!promise_solution||!promise_date||!promise_time_hope||!promise_option){
+        const {is_promise,category,title,contents,requested_term,solution_method,promise_date,promise_time_hope,promise_option} = req.body
+        console.log(`is_promise:${is_promise},category:${category},title:${title},contents:${contents},requested_term:${requested_term},solution_method:${solution_method},promise_date:${promise_date},promise_time_hope:${promise_time_hope},promise_option:${promise_option}`)
+        if(is_promise&&(!category||!title||!contents||!requested_term||!solution_method||!promise_date||!promise_time_hope||!promise_option)){
+            console.log('약속있는 문의')
+            return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,responseMessage.NULL_VALUE))
+        }else if(!is_promise&&(!category||!title||contents||!requested_term)){
+            console.log('약속없는 문의')
             return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,responseMessage.NULL_VALUE))
         }
-        //is_promise : true 약속이 필요한 문의/ false 약속이 필요없는 문의
+        
         try{
             await communicationService.setIssue(req.body,issue_img)
             return res.status(statusCode.OK).send(util.success(statusCode.OK,'등록완료'))
