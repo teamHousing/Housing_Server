@@ -21,12 +21,12 @@ module.exports={
         return issueList
     },
     getDetailCommunication:async(id)=>{
-        const issueDetail = await Issue.findOne({where:{id:id},attributes:['id','category','title','contents','progress','requested_term','promise_solution','issue_img']})
+        const issueDetail = await Issue.findOne({where:{id:id},attributes:['id','category','title','contents','progress','requested_term','solution_method','issue_img']})
         return issueDetail
     },
     setIssue:async({is_promise,category,title,contents,requested_term,solution_method,promise_date,promise_time_hope,promise_option},issue_img)=>{
         console.log(solution_method)
-        const addIssue = await Issue.create({category,title,contents,requested_term,promise_solution,promise_date,promise_time_hope,promise_option,issue_img,progress:0,is_promise})
+        const addIssue = await Issue.create({category,title,contents,requested_term,solution_method,promise_date,promise_time_hope,promise_option,issue_img,progress:0,is_promise:JSON.parse(is_promise)})
         console.log(addIssue)
     }
 }

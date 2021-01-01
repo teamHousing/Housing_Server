@@ -9,9 +9,6 @@ module.exports=function async(sequelize,DataTypes){
         contents:{
             type : DataTypes.STRING
         },
-        fix:{
-            type : DataTypes.BOOLEAN
-        }
     },{
         freezeTableName:true,
         timestamps:true,

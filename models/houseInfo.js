@@ -1,6 +1,6 @@
 module.exports=function async(sequelize,DataTypes){
     return sequelize.define('HouseInfo',{
-        house_name:{
+        owner:{
             type : DataTypes.STRING
         },
         profile_message:{
