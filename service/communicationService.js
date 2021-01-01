@@ -5,7 +5,7 @@ const moment = require('moment')
 
 module.exports={
     getCommunicationList:async()=>{
-        const time = moment("2019-12-30").format("YYYY-MM-DD HH:mm")
+        const time = moment().format("YYYY-MM-DD HH:mm")
         console.log(time)
         console.log(typeof time)
         console.log(moment(time))
@@ -24,7 +24,8 @@ module.exports={
         const issueDetail = await Issue.findOne({where:{id:id},attributes:['id','category','title','contents','progress','requested_term','promise_solution','issue_img']})
         return issueDetail
     },
-    setIssue:async({is_promise,category,title,contents,requested_term,promise_solution,promise_date,promise_time_hope,promise_option},issue_img)=>{
+    setIssue:async({is_promise,category,title,contents,requested_term,solution_method,promise_date,promise_time_hope,promise_option},issue_img)=>{
+        console.log(solution_method)
         const addIssue = await Issue.create({category,title,contents,requested_term,promise_solution,promise_date,promise_time_hope,promise_option,issue_img,progress:0,is_promise})
         console.log(addIssue)
     }
