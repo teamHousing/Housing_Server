@@ -15,7 +15,8 @@ db.User = require('./user')(sequelize,Sequelize) //사용자
 db.Issue = require('./issue')(sequelize,Sequelize) //소통(문의)
 db.HouseInfo = require('./houseInfo')(sequelize,Sequelize) //집정보
 db.Notice = require('./notice')(sequelize,Sequelize) //공지사항
-db.Reply = require('./reply')(sequelize,Sequelize)
+db.Reply = require('./reply')(sequelize,Sequelize)//문의 댓글
+db.Authentication = require('./authentication')(sequelize,Sequelize) //인증번호
 
 //1:N *HouseInfo : Notice
 db.HouseInfo.hasMany(db.Notice,{onDelete:'cascade'})
@@ -25,8 +26,16 @@ db.Notice.belongsTo(db.HouseInfo)
 db.User.hasMany(db.Issue,{onDelete:'cascade'})
 db.Issue.belongsTo(db.User)
 
+//1:N *User : HouseInfo
+db.User.hasMany(db.HouseInfo,{onDelete:'cascade'})
+db.HouseInfo.belongsTo(db.User)
+
 //1:N *Issue : reply
 db.Issue.hasMany(db.Reply,{onDelete:'cascade'})
 db.Reply.belongsTo(db.Issue)
+
+//1:N *User : Authentication
+db.User.hasMany(db.Authentication,{onDelete:'cascade'})
+db.Authentication.belongsTo(db.User)
 
 module.exports = db;
