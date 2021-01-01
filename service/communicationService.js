@@ -26,7 +26,7 @@ module.exports={
     },
     setIssue:async({is_promise,category,title,contents,requested_term,solution_method,promise_date,promise_time_hope,promise_option},issue_img)=>{
         console.log(solution_method)
-        const addIssue = await Issue.create({category,title,contents,requested_term,solution_method,promise_date,promise_time_hope,promise_option,issue_img,progress:0,is_promise:JSON.parse(is_promise)})
+        const addIssue = await Issue.create({category,title,contents,requested_term,promise_solution,promise_date,promise_time_hope,promise_option,issue_img,progress:0,is_promise})
         console.log(addIssue)
     }
 }

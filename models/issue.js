@@ -23,7 +23,7 @@ module.exports=function async(sequelize,DataTypes){
         requested_term:{ //요청사항
             type:DataTypes.STRING,
         },
-        progress:{ //문의 진행사항(확인전-0, 확인중-1, 확인완료-2)
+        progress:{ //문의 진행사항(확인전-0, 확인중-1, 해결완료-2)
             type:DataTypes.INTEGER,
         },
         is_promise:{ // 문의의 약속여부 tinyint 0:false, 1:true
