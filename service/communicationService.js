@@ -1,6 +1,7 @@
 const {Issue} = require('../models')
 const sequelize = require('sequelize')
 const Op = sequelize.Op
+const QueryTypes = sequelize.QueryTypes
 const moment = require('moment')
 
 module.exports={
@@ -21,12 +22,30 @@ module.exports={
         return issueList
     },
     getDetailCommunication:async(id)=>{
-        const issueDetail = await Issue.findOne({where:{id:id},attributes:['id','category','title','contents','progress','requested_term','solution_method','issue_img']})
+        const issueDetail = await Issue.findOne({where:{id:id},attributes:['id','category','title','contents','progress','requested_term','solution_method','issue_img','promise_time_hope']})
         return issueDetail
     },
     setIssue:async({is_promise,category,title,contents,requested_term,solution_method,promise_date,promise_time_hope,promise_option},issue_img)=>{
         console.log(solution_method)
         const addIssue = await Issue.create({category,title,contents,requested_term,solution_method,promise_date,promise_time_hope,promise_option,issue_img,progress:0,is_promise:JSON.parse(is_promise)})
         console.log(addIssue)
+    },
+    getHopeList:async(id)=>{
+        const hopeList = await Issue.findOne({where:{id:id},attributes:['id','promise_time_hope']})
+        return hopeList
+    },
+    promise_confirmation:async(id,promise_time_solution)=>{
+        console.log(promise_time_solution)
+        try{
+            const confirmation = await Issue.update({promise_time_solution:promise_time_solution},{where:{id:id}})
+            console.log(confirmation)
+        }catch(err){
+            console.log(err)
+        }
+        // const test = await Issue.update({promise_time_hope:promise_time_solution},{where:{id:id}})
+        //const confirmation = await Issue.update({promise_time_solution:promise_time_solution},{where:{id:id}})
+        // const query = `UPDATE Issue SET promise_time_solution=${promise_time_solution} WHERE id =${id}`
+        // const confirmation = await sequelize.query(query,{type:QueryTypes.UPDATE})
+        //console.log(confirmation)
     }
 }

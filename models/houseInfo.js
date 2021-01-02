@@ -21,5 +21,3 @@ module.exports=function async(sequelize,DataTypes){
         underscored:true
     })
 }
-
-//test
