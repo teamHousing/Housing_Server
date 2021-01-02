@@ -20,6 +20,7 @@ module.exports={
             const communicationDetail = await communicationService.getDetailCommunication(id)
             return res.status(statusCode.OK).send(util.success(statusCode.OK,'디테일이슈 불러오기 성공',communicationDetail))
         }catch(err){
+            console.error(err)
             return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,'디테일 불러오기 실패'))
         }
     },
@@ -35,12 +36,34 @@ module.exports={
             console.log('약속없는 문의')
             return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,responseMessage.NULL_VALUE))
         }
-        
         try{
             await communicationService.setIssue(req.body,issue_img)
             return res.status(statusCode.OK).send(util.success(statusCode.OK,'등록완료'))
         }catch(err){
-            console.log(err)
+            return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,'문의 등록 실패'))
         }
-    }
+    },
+    //문의한 약속시간 리스트
+    getTimeHope:async(req,res)=>{
+        const {id} = req.params
+        try{
+            const hopeList = await communicationService.getHopeList(id)
+            return res.status(statusCode.OK).send(util.success(statusCode.OK,'약속시간 리스트 불러오기 성공',hopeList))
+        }catch(err){
+            console.error(err)
+            return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,'약속시간 리스트 불러오기 실패'))
+        }
+    },
+    promise_confirmation:async(req,res)=>{
+        const {id} = req.params
+        const {promise_time_solution} = req.body
+        try{
+            await communicationService.promise_confirmation(id,promise_time_solution)
+            return res.status(statusCode.OK).send(util.success(statusCode.OK,'약속확정 성공'))
+        }catch(err){
+            console.error(err)
+            return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,'약속확정 실패'))
+        }
+    },
+
 }

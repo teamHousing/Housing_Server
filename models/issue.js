@@ -6,6 +6,9 @@ module.exports=function async(sequelize,DataTypes){
         },
         title:{ //문의 제목
             type:DataTypes.STRING,
+            get:function(){
+                return this.getDataValue('title')
+            }
         },
         contents:{ //문의 내용
             type:DataTypes.STRING,
@@ -36,7 +39,7 @@ module.exports=function async(sequelize,DataTypes){
             type:DataTypes.DATE,
             set:function(val){
                 return this.setDataValue('promise_date',moment(val).format("YYYY-MM-DD"))
-            }
+            },
         },
         promise_time_hope:{ //문의 약속 희망 시간
             type:DataTypes.STRING,
@@ -44,7 +47,10 @@ module.exports=function async(sequelize,DataTypes){
                 return this.setDataValue('promise_time_hope',JSON.stringify(val))
             },
             get:function(){
-                return JSON.parse(this.getDataValue('promise_date'))
+                console.log('!!!!!!!!!!!!:',this.getDataValue('promise_time_hope'))
+                console.log(typeof this.getDataValue('promise_time_hope'))
+                console.log('!!!!',JSON.parse(this.getDataValue('promise_time_hope')))
+                return JSON.parse(this.getDataValue('promise_time_hope'))
             }
         },
         promise_option:{ //문의 약속 선택 사항
