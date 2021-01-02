@@ -1,11 +1,17 @@
 module.exports=function async(sequelize,DataTypes){
     return sequelize.define('Authentication',{
-        unit:{
+        unit:{ //동
             type:DataTypes.STRING
         },
-        authentication_number:{
+        authentication_number:{ //인증번호
             type:DataTypes.INTEGER,
             allowNull:true
+        },
+        address:{ //주소
+            type:DataTypes.STRING
+        },
+        building:{ //건물명(동)
+            type:DataTypes.STRING
         }
     },{
         freezeTableName:true,

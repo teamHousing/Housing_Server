@@ -36,16 +36,7 @@ module.exports={
     },
     promise_confirmation:async(id,promise_time_solution)=>{
         console.log(promise_time_solution)
-        try{
-            const confirmation = await Issue.update({promise_time_solution:promise_time_solution},{where:{id:id}})
-            console.log(confirmation)
-        }catch(err){
-            console.log(err)
-        }
-        // const test = await Issue.update({promise_time_hope:promise_time_solution},{where:{id:id}})
-        //const confirmation = await Issue.update({promise_time_solution:promise_time_solution},{where:{id:id}})
-        // const query = `UPDATE Issue SET promise_time_solution=${promise_time_solution} WHERE id =${id}`
-        // const confirmation = await sequelize.query(query,{type:QueryTypes.UPDATE})
-        //console.log(confirmation)
+        const confirmation = await Issue.update({promise_time_solution:promise_time_solution},{where:{id:id}})
+        console.log(confirmation)//수정완료1, 실패0
     }
 }

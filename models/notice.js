@@ -1,14 +1,17 @@
 module.exports=function async(sequelize,DataTypes){
     return sequelize.define('Notice',{
-        category:{
+        notice_title:{
             type : DataTypes.STRING
         },
-        title:{
+        notice_contents:{
             type : DataTypes.STRING
         },
-        contents:{
-            type : DataTypes.STRING
+        notice_date:{
+            type:DataTypes.DATE
         },
+        notice_time:{
+            type:DataTypes.STRING
+        }
     },{
         freezeTableName:true,
         timestamps:true,
