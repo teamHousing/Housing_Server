@@ -7,7 +7,7 @@ module.exports=function async(sequelize,DataTypes){
             type : DataTypes.STRING
         },
         notice_date:{
-            type:DataTypes.DATE
+            type:DataTypes.DATEONLY
         },
         notice_time:{
             type:DataTypes.STRING
