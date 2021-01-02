@@ -1,3 +1,4 @@
 module.exports={
-    communicationService:require('./communicationService')
+    communicationService:require('./communicationService'),
+    userService:require('./userService')
 }
