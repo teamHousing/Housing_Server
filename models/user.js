@@ -1,26 +1,26 @@
 module.exports=function async(sequelize,DataTypes){
     return sequelize.define('User',{
-        name:{
+        user_name:{//사용자이름
             type:DataTypes.STRING,
             allowNull:false
         },
-        email:{
+        email:{//사용자아이디
             type:DataTypes.STRING,
             allowNull:false
         },
-        password:{
+        password:{//사용자비번
             type:DataTypes.STRING,
             allowNull:false
         },
-        address:{
+        address:{//주소
             type:DataTypes.STRING,
             allowNull:false
         },
-        building:{
+        building:{//건물명(동)
             type:DataTypes.STRING,
             allowNull:false
         },
-        unit:{
+        unit:{//호수
             type:DataTypes.STRING
         },
         type:{ //사용자구분(집주인:0, 자취생:1)
