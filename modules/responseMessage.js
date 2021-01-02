@@ -20,7 +20,13 @@ module.exports={
     ALREADY_ID: "존재하는 ID 입니다.",
     NO_USER: "존재하지않는 유저 id 입니다.",
     MISS_MATCH_PW: "비밀번호가일치하지않습니다",
+    MISS_MATCH:"아이디나 비밀번호가 일치하지 않습니다.",
   
     /* 서버에러 */
     INTERNAL_SERVER_ERROR: "서버 내부 오류",
+
+    /*토큰*/
+    EMPTY_TOKEN:"빈 토큰",
+    EXPIRED_TOKEN:"토큰 기간 만료",
+    INVALID_TOKEN:"유효하지 않은 토큰"
 }
