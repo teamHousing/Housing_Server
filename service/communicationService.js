@@ -11,8 +11,8 @@ module.exports={
         console.log(typeof time)
         console.log(moment(time))
         const issueList = {}
-        const completeList = await Issue.findAll({where:{progress:{[Op.lt]:2}},attributes:['id','title','contents','progress']})
-        const incompleteList = await Issue.findAll({where:{progress:2},attributes:['id','title','contents','progress']})
+        const completeList = await Issue.findAll({where:{progress:{[Op.lt]:2}},attributes:['id','issue_title','issue_contents','progress']})
+        const incompleteList = await Issue.findAll({where:{progress:2},attributes:['id','issue_title','issue_contents','progress']})
         const completeLength = completeList.length
         const incompleteLength = incompleteList.length
         issueList.completeLength=completeLength
@@ -22,7 +22,7 @@ module.exports={
         return issueList
     },
     getDetailCommunication:async(id)=>{
-        const issueDetail = await Issue.findOne({where:{id:id},attributes:['id','category','title','contents','progress','requested_term','solution_method','issue_img','promise_time_hope']})
+        const issueDetail = await Issue.findOne({where:{id:id},attributes:['id','category','issue_title','issue_contents','progress','requested_term','solution_method','issue_img','promise_option']})
         return issueDetail
     },
     setIssue:async({is_promise,category,title,contents,requested_term,solution_method,promise_date,promise_time_hope,promise_option},issue_img)=>{
@@ -36,7 +36,7 @@ module.exports={
     },
     promise_confirmation:async(id,promise_time_solution)=>{
         console.log(promise_time_solution)
-        const confirmation = await Issue.update({promise_time_solution:promise_time_solution},{where:{id:id}})
-        console.log(confirmation)//수정완료1, 실패0
+        const confirmation = await Issue.update({promise_time_solution, progress:1},{where:{id:id}})
+        return confirmation
     }
 }

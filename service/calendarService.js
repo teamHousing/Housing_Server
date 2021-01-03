@@ -12,9 +12,7 @@ module.exports = {
 
       where:{
         notice_date:{
-          // [Op.gte]: new Date("2021-%month-01"),
-          // [Op.lt]: new Date("2021-%(month+1)-01")
-          [Op.between]:[`${convert_date},${convert_date}`]
+          [Op.between]:[Date.parse(`${convert_date}`),Date.parse(`${convert_date}`)]
         }
       },
       attributes:['notice_title', 'notice_time'],
