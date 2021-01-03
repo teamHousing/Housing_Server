@@ -17,8 +17,8 @@ module.exports={
         issueList.incompleteList=incompleteList
         return issueList
     },
-    getDetailCommunication:async(id)=>{
-        const issueDetail = await Issue.findOne({where:{id:id},attributes:['id','category','issue_title','issue_contents','progress','requested_term','solution_method','issue_img','promise_option'],include:[{model:Reply,attributes:['']}]})
+    getDetailCommunication:async(id,type)=>{
+        const issueDetail = await Issue.findOne({where:{id:id},attributes:['id','category','issue_title','issue_contents','progress','requested_term','solution_method','issue_img','promise_option'],include:[{model:Reply,attributes:['id',`${convertStatus(type)}`]}]})
         return issueDetail
     },
     setIssue:async(id,{is_promise,category,issue_title,issue_contents,requested_term,solution_method,promise_option},issue_img)=>{
@@ -39,4 +39,9 @@ module.exports={
         const confirmation = await Issue.update({promise_time_solution, progress:1},{where:{id:id}})
         return confirmation
     }
+}
+
+const convertStatus = (type)=>{
+    if(type==0) return 'owner_status'
+    else return 'user_status'
 }
