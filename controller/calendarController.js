@@ -16,16 +16,24 @@ module.exports = {
       return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, '스케쥴 리스트 불러오기 실패'));
     }
   },
-  // 캘린더 선택(일) 스케쥴 보여주기
-  getDaySchedule: async (req, res) => {
-    const {day} = req.params;
+  getDetailNotice: async (req, res) => {
+    const {notice_id} = req.body;
     try{
-      const scheduleDetail = await calendarService.getScheduleDetail(date);
-      return res.status(statusCode.OK).send(util.success(statusCode.OK, '선택 날짜 스케쥴 불러오기 성공', scheduleDetail));
-    } catch (err) {
+      const noticeDetail = await calendarService.getNoticeOne(notice_id);
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, '공지사항 상세보기 성공', noticeDetail));
+    } catch(err){
       console.error(err);
-      return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, '선택 날짜 스케쥴 불러오기 실패'));
+      return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, '공지사항 상세보기 실패'));
     }
   },
-  
+  getDetailIssue: async (req, res) => {
+    const {issue_id} = req.body;
+    try{
+      const issueDetail = await calendarService.getIssueOne(issue_id);
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, '약속일정 상세보기 성공', issueDetail));
+    } catch(err){
+      console.error(err);
+      return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, '약속일정 상세보기 실패'));
+    }
+  }
 }
