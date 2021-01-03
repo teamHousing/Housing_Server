@@ -18,7 +18,7 @@ module.exports={
         return issueList
     },
     getDetailCommunication:async(id)=>{
-        const issueDetail = await Issue.findOne({where:{id:id},attributes:['id','category','issue_title','issue_contents','progress','requested_term','solution_method','issue_img','promise_option']})
+        const issueDetail = await Issue.findOne({where:{id:id},attributes:['id','category','issue_title','issue_contents','progress','requested_term','solution_method','issue_img','promise_option'],include:[{model:Reply,attributes:['']}]})
         return issueDetail
     },
     setIssue:async(id,{is_promise,category,issue_title,issue_contents,requested_term,solution_method,promise_option},issue_img)=>{
