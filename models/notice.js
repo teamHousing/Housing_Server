@@ -6,12 +6,18 @@ module.exports=function async(sequelize,DataTypes){
         notice_contents:{
             type : DataTypes.STRING
         },
-        notice_date:{
-            type:DataTypes.DATEONLY
+        notice_year:{
+            type:DataTypes.INTEGER
+        },
+        notice_month:{
+            type:DataTypes.INTEGER
+        },
+        notice_day:{
+            type:DataTypes.INTEGER
         },
         notice_time:{
             type:DataTypes.STRING
-        }
+        },
     },{
         freezeTableName:true,
         timestamps:true,

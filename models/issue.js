@@ -32,34 +32,48 @@ module.exports = function async (sequelize, DataTypes) {
         is_promise: { // 문의의 약속여부 tinyint 0:false, 1:true
             type: DataTypes.BOOLEAN,
         },
-        solution_method: { //문의 약속 해결방법(만나서 : 0/ 전화로:1)
-            type: DataTypes.INTEGER,
-        },
-        promise_date: { //문의 약속 날짜
-            type: DataTypes.DATE,
-            set: function (val) {
-                return this.setDataValue('promise_date', moment(val).format("YYYY-MM-DD"))
-            },
-        },
-        promise_time_hope: { //문의 약속 희망 시간
+        solution_method: { //문의 약속 해결방법
             type: DataTypes.STRING,
-            set: function (val) {
-                return this.setDataValue('promise_time_hope', JSON.stringify(val))
-            },
-            get: function () {
-                if (this.getDataValue('promise_time_hope')) {
-                    return JSON.parse(this.getDataValue('promise_time_hope'))
-                }
-            }
         },
+        // promise_date: { //문의 약속 날짜
+        //     type: DataTypes.DATEONLY,
+        //     set: function (val) {
+        //         return this.setDataValue('promise_date', moment(val).format("YYYY-MM-DD"))
+        //     },
+        // },
+        // promise_time_hope: { //문의 약속 희망 시간
+        //     type: DataTypes.STRING,
+        //     set: function (val) {
+        //         return this.setDataValue('promise_time_hope', JSON.stringify(val))
+        //     },
+        //     get: function () {
+        //         if (this.getDataValue('promise_time_hope')) {
+        //             return JSON.parse(this.getDataValue('promise_time_hope'))
+        //         }
+        //     }
+        // },
         promise_option: { //문의 약속 선택 사항
             type: DataTypes.STRING,
-            defaultValue: '[]'
+            defaultValue: '[]',
+            set:function(val){
+                return this.setDataValue('promise_option',JSON.stringify(val))
+            },
+            get:function(){
+                return JSON.parse(this.getDataValue('promise_option'))
+            }
         },
-        promise_time_solution: { //문의 약속 확정 시간
+        promise_year: { //문의 약속 확정 년
+            type: DataTypes.INTEGER,
+        },
+        promise_month:{//약속 확정 달
+            type: DataTypes.INTEGER,
+        },
+        promise_day:{//약속 확정 일
+            type: DataTypes.INTEGER,
+        },
+        promise_time:{//약속 시간
             type: DataTypes.STRING,
-            defaultValue: ""
-        },
+        }
     }, {
         freezeTableName: true,
         timestamp: true,
