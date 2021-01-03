@@ -3,6 +3,7 @@ const responseMessage = require('../modules/responseMessage')
 const statusCode = require('../modules/statusCode')
 const jwt = require('../modules/jwt')
 const {userService} = require('../service')
+const authentication = require('../models/authentication')
 
 module.exports={
     login:async(req,res)=>{
@@ -22,6 +23,100 @@ module.exports={
         }catch(err){
             console.error(err)
             return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,responseMessage.SIGN_IN_FAIL))
+        }
+    },
+    registration: async (req,res) => {
+        const {type} = req.params;
+        // type : 0 : 집주인
+        if (type == 0){
+            const {user_name, age, email, password, password_check} = req.body;
+            if(!user_name || !age || !email || !password || !password_check){
+                console.log('필요한 값이 없습니다.');
+                return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+            }
+            try{
+                const alreadyEmail = await userService.emailCheck(email);
+                if(alreadyEmail){
+                    console.log('이미 존재하는 ID 입니다.');
+                    return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.ALREADY_ID));
+                }
+                const correctPassword = await userService.passwordCheck(password, password_check);
+                if(!correctPassword){
+                    console.log('비밀번호가 일치하지 않습니다.');
+                    return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.MISS_MATCH_PW));
+                }
+                const {address, building} = req.body;
+                if(!address || !building){
+                    console.log('필요한 값이 없습니다.');
+                return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+                }
+                const user = await userService.registration(type, user_name, age, email, password, address, building);
+                console.log('user:',user)
+                return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.MEMBER_CREATE_SUCCESS, {
+                    type: 0,
+                    user_name: user.user_name,
+                    age: user.age,
+                    email: user.email,
+                    password: user.password,
+                    address: user.address,
+                    building: user.building,
+                }));
+            } catch (err){
+                console.error(err);
+                return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.SIGN_UP_FAIL));
+            }
+        } else {
+            const {authentication_number} = req.body;
+            console.log('authentication!!!!!!',authentication_number)
+            if(!authentication_number){
+                console.log('필요한 값이 없습니다.');
+                return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+            }
+            try{
+                const addressInformation = await userService.authentication_number_check(authentication_number);
+                console.log('check!!!!!!!!!!',addressInformation)
+                if(addressInformation==null){
+                    console.log('유효하지 않은 인증번호 입니다.');
+                    return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.INVALID_AUTHENTICATION_NUMBER));
+                }
+                console.log('test')
+                //const addressInformation = await userService.getAddressInformation(authentication_number);
+                const {user_name, age, email, password, password_check} = req.body;
+                if(!user_name || !age || !email || !password || !password_check){
+                    console.log('필요한 값이 없습니다.');
+                    return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+                }
+                const alreadyEmail = await userService.emailCheck(email);
+                    if(alreadyEmail){
+                        console.log('이미 존재하는 ID 입니다.');
+                        return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.ALREADY_ID));
+                    }
+                const correctPassword = await userService.passwordCheck(password, password_check);
+                if(!correctPassword){
+                    console.log('비밀번호가 일치하지 않습니다.');
+                    return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.MISS_MATCH_PW));
+                }
+                const user = await userService.registration(type, user_name, age, email, password, addressInformation.address, addressInformation.building, addressInformation.unit);
+                user.address = addressInformation.address;
+                user.building = addressInformation.building;
+                user.unit = addressInformation.unit;
+                console.log('!!!!!!!!!!!!!!!1',user)
+                
+                return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SIGN_UP_SUCCESS,{
+                    type: user.type,
+                    user_name: user.user_name,
+                    age: user.age,
+                    email: user.email,
+                    password: user.password,
+                    address: user.address,
+                    building: user.building,
+                    unit: user.unit,
+                }));
+
+            } catch (err){
+                console.log(err);
+                return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.SIGN_UP_FAIL));
+            }
         }
     }
 }
