@@ -1,13 +1,24 @@
 module.exports = function async(sequelize,DataTypes){
     return sequelize.define('Reply',{
-        reply_title:{
-            type:DataTypes.STRING
+        user_status:{ //사용자 리플
+            type:DataTypes.STRING,
+            defaultValue:"[0]",
+            set:function(val){
+                return this.setDataValue('user_status',JSON.stringify(val))
+            },
+            get:function(){
+                return JSON.parse(this.getDataValue('user_status'))
+            }
         },
-        reply_contents:{
-            type:DataTypes.TEXT
-        },
-        writer_type:{
-            type:DataTypes.INTEGER
+        owner_status:{//집주인 리플
+            type:DataTypes.STRING,
+            defaultValue:"[0]",
+            set:function(val){
+                return this.setDataValue('owner_status',JSON.stringify(val))
+            },
+            get:function(){
+                return JSON.parse(this.getDataValue('owner_status'))
+            }
         }
     },{
         freezeTableName:true,

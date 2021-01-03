@@ -8,7 +8,8 @@ module.exports = {
     const payload = {
       id: user.id,
       name: user.user_name,
-      address:user.address
+      address:user.address,
+      type:user.type
     };
     const result = {
       accessToken: jwt.sign(payload, secretKey, options),

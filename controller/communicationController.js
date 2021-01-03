@@ -27,27 +27,29 @@ module.exports={
     //소통하기 문의 등록
     setIssue:async(req,res)=>{
         const issue_img = req.files.map(files=>files.location)
-        const {is_promise,category,title,contents,requested_term,solution_method,promise_date,promise_time_hope,promise_option} = req.body
-        console.log(`is_promise:${is_promise},category:${category},title:${title},contents:${contents},requested_term:${requested_term},solution_method:${solution_method},promise_date:${promise_date},promise_time_hope:${promise_time_hope},promise_option:${promise_option}`)
-        if(JSON.parse(is_promise)&&!category||!title||!contents||!requested_term||!solution_method||!promise_date||!promise_time_hope||!promise_option){
+        const {id} = req.decoded
+        const {is_promise,category,issue_title,issue_contents,requested_term,solution_method,promise_date,promise_option} = req.body
+        console.log(`is_promise:${is_promise}, category:${category}, title:${issue_title}, contents:${issue_contents}, requested_term:${requested_term}, solution_method:${solution_method}, promise_date:${promise_date}, promise_option:${promise_option}`)
+        if(JSON.parse(is_promise)&&!category||!issue_title||!issue_contents||!requested_term||!solution_method||!promise_option){
             console.log('약속있는 문의')
             return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,responseMessage.NULL_VALUE))
-        }else if(!JSON.parse(is_promise)&&!category||!title||!contents||!requested_term){
+        }else if(!JSON.parse(is_promise)&&!category||!issue_title||!issue_contents||!requested_term){
             console.log('약속없는 문의')
             return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,responseMessage.NULL_VALUE))
         }
         try{
-            await communicationService.setIssue(req.body,issue_img)
+            await communicationService.setIssue(id,req.body,issue_img)
             return res.status(statusCode.OK).send(util.success(statusCode.OK,'등록완료'))
         }catch(err){
+            console.error(err)
             return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,'문의 등록 실패'))
         }
     },
-    //문의한 약속시간 리스트
-    getTimeHope:async(req,res)=>{
+    //문의한 약속옵션 리스트
+    getOption:async(req,res)=>{
         const {id} = req.params
         try{
-            const hopeList = await communicationService.getHopeList(id)
+            const hopeList = await communicationService.getOptionList(id)
             return res.status(statusCode.OK).send(util.success(statusCode.OK,'약속시간 리스트 불러오기 성공',hopeList))
         }catch(err){
             console.error(err)
