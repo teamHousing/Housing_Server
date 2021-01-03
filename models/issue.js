@@ -6,9 +6,6 @@ module.exports = function async (sequelize, DataTypes) {
         },
         issue_title: { //문의 제목
             type: DataTypes.STRING,
-            get: function () {
-                return this.getDataValue('title')
-            }
         },
         issue_contents: { //문의 내용
             type: DataTypes.STRING,
