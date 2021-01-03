@@ -19,23 +19,27 @@ db.Reply = require('./reply')(sequelize,Sequelize)//문의 댓글
 db.Authentication = require('./authentication')(sequelize,Sequelize) //인증번호
 
 //1:N *HouseInfo : Notice
-db.HouseInfo.hasMany(db.Notice,{onDelete:'cascade'})
+db.HouseInfo.hasMany(db.Notice,{onDelete:'cascade',foreignKey:'house_info_id'})
 db.Notice.belongsTo(db.HouseInfo)
 
 //1:N *User : Issue
-db.User.hasMany(db.Issue,{onDelete:'cascade'})
+db.User.hasMany(db.Issue,{onDelete:'cascade',foreignKey:'user_id'})
 db.Issue.belongsTo(db.User)
 
-//1:N *User : HouseInfo
-db.User.hasMany(db.HouseInfo,{onDelete:'cascade'})
-db.HouseInfo.belongsTo(db.User)
+//1:N *HouseInfo : User
+db.HouseInfo.hasMany(db.User,{onDelete:'cascade',foreignKey:'house_info_id'})
+db.User.belongsTo(db.HouseInfo)
+
+//1:N *HouseInfo : Issue
+db.HouseInfo.hasMany(db.Issue,{onDelete:'cascade',foreignKey:'house_info_id'})
+db.Issue.belongsTo(db.HouseInfo)
 
 //1:N *Issue : reply
-db.Issue.hasMany(db.Reply,{onDelete:'cascade'})
+db.Issue.hasMany(db.Reply,{onDelete:'cascade',foreignKey:'issue_id'})
 db.Reply.belongsTo(db.Issue)
 
 //1:N *User : Authentication
-db.User.hasMany(db.Authentication,{onDelete:'cascade'})
+db.User.hasMany(db.Authentication,{onDelete:'cascade',foreignKey:'user_id'})
 db.Authentication.belongsTo(db.User)
 
 module.exports = db;

@@ -1,13 +1,12 @@
 module.exports = function async(sequelize,DataTypes){
     return sequelize.define('Reply',{
-        reply_title:{
-            type:DataTypes.STRING
+        user_status:{ //사용자 리플
+            type:DataTypes.STRING,
+            defaultValue:"[]"
         },
-        reply_contents:{
-            type:DataTypes.TEXT
-        },
-        writer_type:{
-            type:DataTypes.INTEGER
+        owner_status:{//집주인 리플
+            type:DataTypes.STRING,
+            defaultValue:"[]"
         }
     },{
         freezeTableName:true,
