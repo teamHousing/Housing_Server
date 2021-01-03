@@ -7,10 +7,9 @@ module.exports = {
   // 스케쥴 === 공지사항 + 약속
   // 캘린더 선택(월) 스케쥴 보여주기
   getMonthSchedule: async (req, res) => {
-    const {select_date} = req.body
+    const {select_year, select_month} = req.body
     try{
-      console.log(select_date)
-      const scheduleList = await calendarService.getScheduleList(select_date);
+      const scheduleList = await calendarService.getScheduleList(select_year, select_month);
       return res.status(statusCode.OK).send(util.success(statusCode.OK, '스케쥴 리스트 불러오기 성공', scheduleList));
     } catch (err) {
       console.error(err)
