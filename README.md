@@ -1,5 +1,5 @@
 
-## 🏠Housing
+## 🏠 Housing : 하버드(Server)
 <img style="border: 1px solid black !important; border-radius:20px;" src="https://user-images.githubusercontent.com/60912550/103667314-1aacac00-4fb9-11eb-9035-50c6df179898.png?raw=true" width="200px" />
 
 <br />
@@ -82,7 +82,7 @@ master
 ## 🖥 Dependencies module
  
 - **package.json**
-
+```
 {
   "name": "housing-server",
   "version": "0.0.0",
@@ -108,4 +108,4 @@ master
     "sequelize-cli": "^6.2.0"
   }
 }
-
+```
