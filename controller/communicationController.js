@@ -1,7 +1,7 @@
 const util = require('../modules/util')
 const responseMessage = require('../modules/responseMessage')
 const statusCode = require('../modules/statusCode')
-const {communicationService} = require('../service')
+const {communicationService,replyService} = require('../service')
 
 module.exports={
     //소통하기 전체리스트(완료,미완료 구분)
@@ -16,8 +16,9 @@ module.exports={
     //소통하기 문의상세보기
     getDetailIssue:async(req,res)=>{
         const {id}=req.params
+        const {type}=req.decoded
         try{
-            const communicationDetail = await communicationService.getDetailCommunication(id)
+            const communicationDetail = await communicationService.getDetailCommunication(id,type)
             return res.status(statusCode.OK).send(util.success(statusCode.OK,'디테일이슈 불러오기 성공',communicationDetail))
         }catch(err){
             console.error(err)
@@ -28,9 +29,9 @@ module.exports={
     setIssue:async(req,res)=>{
         const issue_img = req.files.map(files=>files.location)
         const {id} = req.decoded
-        const {is_promise,category,issue_title,issue_contents,requested_term,solution_method,promise_date,promise_option} = req.body
+        const {is_promise,category,issue_title,issue_contents,requested_term,promise_date,promise_option} = req.body
         console.log(`is_promise:${is_promise}, category:${category}, title:${issue_title}, contents:${issue_contents}, requested_term:${requested_term}, solution_method:${solution_method}, promise_date:${promise_date}, promise_option:${promise_option}`)
-        if(JSON.parse(is_promise)&&!category||!issue_title||!issue_contents||!requested_term||!solution_method||!promise_option){
+        if(JSON.parse(is_promise)&&!category||!issue_title||!issue_contents||!requested_term||!promise_option){
             console.log('약속있는 문의')
             return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,responseMessage.NULL_VALUE))
         }else if(!JSON.parse(is_promise)&&!category||!issue_title||!issue_contents||!requested_term){
@@ -56,19 +57,47 @@ module.exports={
             return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,'약속시간 리스트 불러오기 실패'))
         }
     },
-    promise_confirmation:async(req,res)=>{
-        const {id} = req.params
-        const {promise_time_solution} = req.body
+    promiseConfirmation:async(req,res)=>{
+        const {id} = req.params//issue_id
+        const {promise_option} = req.body
         try{
-            const confirmation = await communicationService.promise_confirmation(id,promise_time_solution)
-            if(confirmation == 0){
-                return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,'약속확정 실패'))
-            }
-            return res.status(statusCode.OK).send(util.success(statusCode.OK,'약속확정 성공'))
+            const confirmation = await communicationService.promise_confirmation(id,promise_option)
+            console.log('confirmation:',confirmation)
+            return res.status(statusCode.OK).send(util.success(statusCode.OK,'약속확정 성공',confirmation))
         }catch(err){
             console.error(err)
             return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,'약속확정 실패'))
         }
     },
-
+    reqModifyPromiseOption:async(req,res)=>{
+        const {id} = req.params
+        try{
+            await replyService.reqModifyPromiseOption(id)
+            return res.status(statusCode.OK).send(util.success(statusCode.OK,'약속일정 수정요청하기 성공'))
+        }catch(err){
+            console.error(err)
+            return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,'약속일정 수정요청하기 실패'))
+        }
+    },
+    modifyPromiseOption:async(req,res)=>{
+        const {id} = req.params
+        const {promise_option} = req.body
+        try{
+            await communicationService.modifyPromiseOption(id,promise_option)
+            return res.status(statusCode.OK).send(util.success(statusCode.OK,'약속 수정하기 성공'))
+        }catch(err){
+            console.error(err)
+            return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,"약속 수정하기 실패"))
+        }
+    },
+    completePromise:async(req,res)=>{
+        const {id} = req.params
+        try{
+            await replyService.completePromise(id)
+            return res.status(statusCode.OK).send(util.success(statusCode.OK,"문의 해결완료"))
+        }catch(err){
+            console.error(err)
+            return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,"문의 해결완료 실패"))
+        }
+    }
 }
