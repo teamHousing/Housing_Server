@@ -11,5 +11,26 @@ module.exports={
             const reply = await Reply.findOne({where:{issue_id:issue_id},attributes:['id','user_status']})
             return reply
         }
+    },
+    reqModifyPromiseOption:async(id)=>{
+        try{
+            const reply = await Reply.findOne({where:{issue_id:id}})
+        console.log(...reply.user_status)
+        const user_status = [3]
+        const owner_status = [...reply.owner_status,2]
+        await Reply.update({user_status,owner_status},{where:{issue_id:id}})
+        }catch(err){
+            throw err
+        }
+    },
+    completePromise:async(id)=>{
+        try{
+            const reply = await Reply.findOne({where:{issue_id:id}})
+            const user_status = [...reply.user_status,4]
+            const owner_status = [...reply.owner_status,4]
+            await Reply.update({user_status,owner_status},{where:{id:reply.id}})
+        }catch(err){
+            throw err
+        }
     }
 }
