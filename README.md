@@ -39,6 +39,9 @@
 <br />
 
 ## 🖥 Code convention
+```
+https://github.com/tipjs/javascript-style-guide
+```
  
 - **git branch**
 
