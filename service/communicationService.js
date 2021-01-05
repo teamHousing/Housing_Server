@@ -12,7 +12,7 @@ module.exports = {
     getCommunicationList: async () => {
         const time = moment().format("YYYY-MM-DD HH:mm")
         const issueList = {}
-        const completeList = await Issue.findAll({
+        const incompleteList = await Issue.findAll({
             where: {
                 progress: {
                     [Op.lt]: 2
@@ -20,7 +20,7 @@ module.exports = {
             },
             attributes: ['id', 'issue_title', 'issue_contents', 'progress']
         })
-        const incompleteList = await Issue.findAll({
+        const completeList = await Issue.findAll({
             where: {
                 progress: 2
             },
@@ -28,10 +28,10 @@ module.exports = {
         })
         const completeLength = completeList.length
         const incompleteLength = incompleteList.length
-        issueList.completeLength = completeLength
-        issueList.completeList = completeList
-        issueList.incompleteLength = incompleteLength
-        issueList.incompleteList = incompleteList
+        issueList.complete_length = completeLength
+        issueList.complete_list = completeList
+        issueList.incomplete_length = incompleteLength
+        issueList.incomplete_list = incompleteList
         return issueList
     },
     getDetailCommunication: async (id, type) => {
@@ -39,7 +39,7 @@ module.exports = {
             where: {
                 id: id
             },
-            attributes: ['id', 'category', 'issue_title', 'issue_contents', 'progress', 'requested_term', 'solution_method', 'issue_img', 'promise_option'],
+            attributes: ['id', 'category', 'issue_title', 'issue_contents', 'progress', 'requested_term', 'issue_img', 'promise_option','promise_year','promise_month','promise_day','promise_time','solution_method'],
             include: [{
                 model: Reply,
                 attributes: ['id', `${convertStatus(type)}`]

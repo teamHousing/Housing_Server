@@ -3,7 +3,6 @@ const router = express.Router()
 const communicationController = require('../../controller/communicationController')
 const upload = require('../../modules/multer')
 const authUtil = require('../../middlewares/authUtil')
-const replyController = require('../../controller/replyController')
 
 router.get('/',authUtil.checkToken,communicationController.getAllIssue)//전체리스트
 router.get('/:id',authUtil.checkToken,communicationController.getDetailIssue)//문의 상세보기

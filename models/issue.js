@@ -70,6 +70,9 @@ module.exports = function async (sequelize, DataTypes) {
         },
         promise_time:{//약속 시간
             type: DataTypes.STRING,
+        },
+        confirmation_promise_option:{//확정된 선택사항
+            type: DataTypes.STRING
         }
     }, {
         freezeTableName: true,
