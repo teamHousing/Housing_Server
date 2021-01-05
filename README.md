@@ -44,7 +44,7 @@
 master
    |
    |--- main
-   |--- hungjong
+   |--- hyunjong
    |--- jinho
 ```
 
@@ -79,8 +79,10 @@ master
 ![image](https://user-images.githubusercontent.com/57162257/103644770-3ce30180-4f9a-11eb-9376-5b9a0453c7c4.png)
 
 
-| package.json |
-| ----------------------------------------------------------------------------------------- |
+## 🖥 Dependencies module
+ 
+- **package.json**
+
 {
   "name": "housing-server",
   "version": "0.0.0",
@@ -106,4 +108,4 @@ master
     "sequelize-cli": "^6.2.0"
   }
 }
-| ----------------------------------------------------------------------------------------- |
+
