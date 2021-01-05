@@ -13,8 +13,6 @@
 
 | **🙋 [이진호](https://github.com/dk-master)** | **🙋‍ [이현종](https://github.com/dudgns3tp)** |
 | :---: |:---:|
-| [![FVCproductions](https://user-images.githubusercontent.com/60912550/103666307-d10f9180-4fb7-11eb-82d1-b5d482a1daaa.png)]()    | [![FVCproductions]((https://user-images.githubusercontent.com/60912550/103666311-d371eb80-4fb7-11eb-9cc1-40c3365949bb.jpg)] |
+| [![FVCproductions](https://user-images.githubusercontent.com/60912550/103666307-d10f9180-4fb7-11eb-82d1-b5d482a1daaa.png)]() | [![FVCproductions]((https://user-images.githubusercontent.com/60912550/103666311-d371eb80-4fb7-11eb-9cc1-40c3365949bb.jpg)] |
 | 서버 개발자 | 서버 개발자|
 | 배포 환경 구축 <br /> 회원가입 <br /> 캘린더 <br /> 우리집소식  <br /> 인증번호 생성 <br />|rdb설계 <br /> 배포 환경 구축 <br /> 로그인 <br /> 소통하기 <br /> 네이버 지도 API |
-| **![placepic_bedge](https://img.shields.io/badge/placepic-sprint2-363636)**| **![placepic_bedge](https://img.shields.io/badge/placepic-sprint2-363636)**|
-|마이페이지 & 랭킹|좋아요 & 북마크 Interaction|
