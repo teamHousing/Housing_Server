@@ -12,6 +12,9 @@ module.exports={
     MEMBER_UPDATE_FAIL: "회원 수정 실패",
     MEMBER_DELETE_FAIL: "회원 삭제 실패",
   
+    /* 인증번호 */
+    INVALID_AUTHENTICATION_NUMBER: "유효하지 않은 인증번호",
+
     /* 회원가입 */
     SIGN_UP_SUCCESS: "회원가입성공",
     SIGN_UP_FAIL: "회원 가입 실패",
@@ -19,7 +22,7 @@ module.exports={
     SIGN_IN_FAIL: "로그인 실패",
     ALREADY_ID: "존재하는 ID 입니다.",
     NO_USER: "존재하지않는 유저 id 입니다.",
-    MISS_MATCH_PW: "비밀번호가일치하지않습니다",
+    MISS_MATCH_PW: "비밀번호가 일치하지 않습니다",
     MISS_MATCH:"아이디나 비밀번호가 일치하지 않습니다.",
   
     /* 서버에러 */
