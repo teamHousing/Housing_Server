@@ -32,7 +32,7 @@
 * TRY 
 * WITH
 * IMPACT
-* 
+* DO MY BEST
 * PRIDE on Housing✨
 * 하우징의 슬로건 : 기분 좋은 문의 요청, 부담 없는 문제 해결! 방구석 소통의 시작
 
