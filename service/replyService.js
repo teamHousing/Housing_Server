@@ -1,4 +1,4 @@
-const {Reply} = require('../models')
+const {Reply,Issue} = require('../models')
 
 module.exports={
     getAllReply:async(type,issue_id)=>{//type으로 사용자상태를 변경할껀지 집주인상태를 변경할껀지 필터링
@@ -29,6 +29,8 @@ module.exports={
             const user_status = [...reply.user_status,4]
             const owner_status = [...reply.owner_status,4]
             await Reply.update({user_status,owner_status},{where:{id:reply.id}})
+            await Issue.update({progress:2},{where:{id:id}})
+
         }catch(err){
             throw err
         }

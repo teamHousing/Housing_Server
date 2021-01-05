@@ -72,7 +72,13 @@ module.exports = function async (sequelize, DataTypes) {
             type: DataTypes.STRING,
         },
         confirmation_promise_option:{//확정된 선택사항
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            set:function(val){
+                return this.setDataValue('confirmation_promise_option',JSON.stringify(val))
+            },
+            get:function(){
+                return JSON.parse(this.getDataValue('confirmation_promise_option'))
+            }
         }
     }, {
         freezeTableName: true,

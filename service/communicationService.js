@@ -39,7 +39,7 @@ module.exports = {
             where: {
                 id: id
             },
-            attributes: ['id', 'category', 'issue_title', 'issue_contents', 'progress', 'requested_term', 'issue_img', 'promise_option','promise_year','promise_month','promise_day','promise_time','solution_method'],
+            attributes: ['id', 'category', 'issue_title', 'issue_contents', 'progress', 'requested_term', 'issue_img', 'promise_option','promise_year','promise_month','promise_day','promise_time','solution_method','confirmation_promise_option'],
             include: [{
                 model: Reply,
                 attributes: ['id', `${convertStatus(type)}`]
@@ -91,7 +91,8 @@ module.exports = {
                 promise_day: promise_date.date(),
                 promise_time: promise_option[1],
                 solution_method: promise_option[2],
-                progress: 1
+                progress: 1,
+                confirmation_promise_option:promise_option
             }, {
                 where: {
                     id: id
