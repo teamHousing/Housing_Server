@@ -73,6 +73,7 @@ module.exports = function async (sequelize, DataTypes) {
         },
         confirmation_promise_option:{//확정된 선택사항
             type: DataTypes.STRING,
+            defaultValue:"[]",
             set:function(val){
                 return this.setDataValue('confirmation_promise_option',JSON.stringify(val))
             },
