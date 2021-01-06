@@ -10,6 +10,12 @@ module.exports={
         const {unit} = req.params
         try{
             const communicationList = await communicationService.getCommunicationList(id,type,unit)
+            if(communicationList==undefined){
+                return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,"옳지 않은 사용자타입입니다."))
+            }
+            if(communicationList.length<=0){
+                return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,"존재하지 않는 호 입니다."))
+            }
             return res.status(statusCode.OK).send(util.success(statusCode.OK,'커뮤니케이션 리스트불러오기 성공',communicationList))
         }catch(err){
             return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,'실패'))

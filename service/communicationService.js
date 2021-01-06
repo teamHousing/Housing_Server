@@ -10,39 +10,87 @@ const moment = require('moment')
 
 module.exports = {
     getCommunicationList: async (id,type,unit) => {
-        console.log('unit:',unit)
-        console.log(typeof unit)
         const time = moment().format("YYYY-MM-DD HH:mm")
         const issueList = {}
-        if(type==0){
-
-        }else if(type==1){
-            const incompleteList = await Issue.findAll({
+        const convert_unit = JSON.parse(unit)
+        var incompleteLength
+        var completeLength
+        var incompleteList
+        var completeList
+        if(type==0 && convert_unit==-1){
+            console.log('집주인 전체리스트')
+            incompleteList = await Issue.findAll({
                 where: {
                     progress: {
-                        user_id:id,
                         [Op.lt]: 2
                     }
                 },
                 attributes: ['id', 'issue_title', 'issue_contents', 'progress']
             })
-            const completeList = await Issue.findAll({
+            completeList = await Issue.findAll({
+                where: {
+                    progress: 2
+                },
+                attributes: ['id', 'issue_title', 'issue_contents', 'progress']
+            })
+            issueList.unit=`전체 호수`
+        }else if(type==0 && convert_unit>0){
+            console.log(`집주인 ${unit}호 문의사항`)
+            console.log('unit:',Number(unit))
+            const user = await User.findOne({where:{unit:Number(unit)}})
+            console.log('user:',user)
+            if(user===null){
+                console.log('hi')
+                return []
+            }
+            const user_id=user.id
+            console.log(user_id)
+            incompleteList = await Issue.findAll({
+                where: {
+                    user_id:user_id,
+                    progress: {
+                        [Op.lt]: 2
+                    }
+                },
+                attributes: ['id', 'issue_title', 'issue_contents', 'progress']
+            })
+            completeList = await Issue.findAll({
+                where: {
+                    user_id:user_id,
+                    progress: 2
+                },
+                attributes: ['id', 'issue_title', 'issue_contents', 'progress']
+            })
+            issueList.unit=`${unit}호`
+        }
+        else if(type==1){
+            console.log('자취생 전체 문의사항')
+            incompleteList = await Issue.findAll({
+                where: {
+                    user_id:id,
+                    progress: {
+                        [Op.lt]: 2
+                    }
+                },
+                attributes: ['id', 'issue_title', 'issue_contents', 'progress']
+            })
+            completeList = await Issue.findAll({
                 where: {
                     user_id:id,
                     progress: 2
                 },
                 attributes: ['id', 'issue_title', 'issue_contents', 'progress']
             })
-            const incompleteLength = incompleteList.length
-            const completeLength = completeList.length
-            issueList.incomplete_length = incompleteLength
-            issueList.incomplete_list = incompleteList
-            issueList.complete_length = completeLength
-            issueList.complete_list = completeList
-            return issueList
         }else{
-
+            return undefined
         }
+        incompleteLength = incompleteList.length
+        completeLength = completeList.length
+        issueList.incomplete_length = incompleteLength
+        issueList.incomplete_list = incompleteList
+        issueList.complete_length = completeLength
+        issueList.complete_list = completeList
+        return issueList
     },
     getDetailCommunication: async (id, type) => {
         const issueDetail = await Issue.findOne({
