@@ -1,8 +1,8 @@
-const {Notice, Issue, User, Authentication} = require('../models');
-const sequelize = require('sequelize');
-const Op = sequelize.Op;
-const moment = require('moment')
+const {User,HouseInfo} = require('../models')
 
-module.exports = {
-  
+module.exports={
+    getUnit:async(address)=>{
+        const unitList = await User.findAll({where:{type:1,address:address},attributes:['id','unit','house_info_id']})
+        return unitList
+    }
 }

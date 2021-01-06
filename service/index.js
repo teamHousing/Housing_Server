@@ -4,7 +4,7 @@ module.exports={
     communicationService:require('./communicationService'),
     calendarService:require('./calendarService'),
     userService:require('./userService'),
-    houseInfoService:require('./houseInfoService'),
+    replyService:require('./replyService'),
+    houseInfoService:require('./houseInfoService')
     authenticationService:require('./authenticationService'),
-    replyService:require('./replyService')
 }
