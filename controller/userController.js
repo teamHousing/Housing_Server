@@ -35,6 +35,7 @@ module.exports={
                 return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
             }
             try{
+                console.log('test123');
                 const alreadyEmail = await userService.emailCheck(email);
                 if(alreadyEmail){
                     console.log('이미 존재하는 ID 입니다.');
@@ -50,6 +51,7 @@ module.exports={
                     console.log('필요한 값이 없습니다.');
                 return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
                 }
+                // const house_info = await userService.set_house_info(user_name)
                 const user = await userService.registration(type, user_name, age, email, password, address, building);
                 console.log('user:',user)
                 return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.MEMBER_CREATE_SUCCESS, {

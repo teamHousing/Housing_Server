@@ -3,4 +3,5 @@ const authenticationController = require('../../controller/authenticationControl
 const router = express.Router()
 const authUtil = require('../../middlewares/authUtil')
 
+router.post('/number', authUtil.checkToken, authenticationController.setAuthenticationNumber);
 module.exports=router
