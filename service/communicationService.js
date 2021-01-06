@@ -181,7 +181,6 @@ module.exports = {
         try{
             await Issue.update({promise_option},{where:{id:id}})
             const reply = await Reply.findOne({where:{issue_id:id}})
-            console.log(reply)
             const owner_status = [...reply.owner_status,3]
             await Reply.update({owner_status},{where:{id:reply.id}})
         }catch(err){
