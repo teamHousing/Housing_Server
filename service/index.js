@@ -5,6 +5,6 @@ module.exports={
     calendarService:require('./calendarService'),
     userService:require('./userService'),
     replyService:require('./replyService'),
-    houseInfoService:require('./houseInfoService')
+    houseInfoService:require('./houseInfoService'),
     authenticationService:require('./authenticationService'),
 }
