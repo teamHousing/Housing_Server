@@ -21,7 +21,7 @@ module.exports=function async(sequelize,DataTypes){
             allowNull:false
         },
         unit:{//호수
-            type:DataTypes.STRING
+            type:DataTypes.INTEGER
         },
         type:{ //사용자구분(집주인:0, 자취생:1)
             type:DataTypes.INTEGER,

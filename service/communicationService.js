@@ -9,37 +9,47 @@ const Op = sequelize.Op
 const moment = require('moment')
 
 module.exports = {
-    getCommunicationList: async () => {
+    getCommunicationList: async (id,type,unit) => {
+        console.log('unit:',unit)
+        console.log(typeof unit)
         const time = moment().format("YYYY-MM-DD HH:mm")
         const issueList = {}
-        const incompleteList = await Issue.findAll({
-            where: {
-                progress: {
-                    [Op.lt]: 2
-                }
-            },
-            attributes: ['id', 'issue_title', 'issue_contents', 'progress']
-        })
-        const completeList = await Issue.findAll({
-            where: {
-                progress: 2
-            },
-            attributes: ['id', 'issue_title', 'issue_contents', 'progress']
-        })
-        const completeLength = completeList.length
-        const incompleteLength = incompleteList.length
-        issueList.complete_length = completeLength
-        issueList.complete_list = completeList
-        issueList.incomplete_length = incompleteLength
-        issueList.incomplete_list = incompleteList
-        return issueList
+        if(type==0){
+
+        }else if(type==1){
+            const incompleteList = await Issue.findAll({
+                where: {
+                    progress: {
+                        user_id:id,
+                        [Op.lt]: 2
+                    }
+                },
+                attributes: ['id', 'issue_title', 'issue_contents', 'progress']
+            })
+            const completeList = await Issue.findAll({
+                where: {
+                    user_id:id,
+                    progress: 2
+                },
+                attributes: ['id', 'issue_title', 'issue_contents', 'progress']
+            })
+            const incompleteLength = incompleteList.length
+            const completeLength = completeList.length
+            issueList.incomplete_length = incompleteLength
+            issueList.incomplete_list = incompleteList
+            issueList.complete_length = completeLength
+            issueList.complete_list = completeList
+            return issueList
+        }else{
+
+        }
     },
     getDetailCommunication: async (id, type) => {
         const issueDetail = await Issue.findOne({
             where: {
                 id: id
             },
-            attributes: ['id', 'category', 'issue_title', 'issue_contents', 'progress', 'requested_term', 'issue_img', 'promise_option','promise_year','promise_month','promise_day','promise_time','solution_method'],
+            attributes: ['id', 'category', 'issue_title', 'issue_contents', 'progress', 'requested_term', 'issue_img', 'promise_option','promise_year','promise_month','promise_day','promise_time','solution_method','confirmation_promise_option'],
             include: [{
                 model: Reply,
                 attributes: ['id', `${convertStatus(type)}`]
@@ -63,7 +73,7 @@ module.exports = {
             promise_option,
             issue_img,
             progress: 0,
-            is_promise: JSON.parse(is_promise)
+            is_promise: is_promise
         })
         const user = await User.findByPk(id)
         await user.addIssue(addIssue)
@@ -91,7 +101,8 @@ module.exports = {
                 promise_day: promise_date.date(),
                 promise_time: promise_option[1],
                 solution_method: promise_option[2],
-                progress: 1
+                progress: 1,
+                confirmation_promise_option:promise_option
             }, {
                 where: {
                     id: id
@@ -114,9 +125,6 @@ module.exports = {
                 }
             })
             console.log('is_update_reply:',is_update_reply)
-            return {
-                confirmation_promise_option: [promise_option[0], promise_option[1], promise_option[2]]
-            }
         } catch (err) {
             throw err
         }
