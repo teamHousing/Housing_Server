@@ -1,4 +1,4 @@
-const {Notice, Issue} = require('../models');
+const {Notice, Issue, User} = require('../models');
 const sequelize = require('sequelize');
 const Op = sequelize.Op;
 const moment = require('moment')
@@ -18,7 +18,7 @@ module.exports = {
     });
     // 선택월 기준 이전달과 다음달포함 총 3개월 약속 일정
     const issueList = await Issue.findAll({
-      attributes:['id', 'promise_year','promise_month','promise_day', 'issue_title', 'issue_contents', 'promise_time'],
+      attributes:['id', 'user_id','category', 'solution_method', 'promise_year','promise_month','promise_day', 'issue_title', 'issue_contents', 'promise_time'],
       where:{
         progress: 1,
         [Op.or]:[
@@ -28,7 +28,7 @@ module.exports = {
         ]
       }
     });
-
+    
     console.log(noticeList, issueList);
     return [noticeList, issueList];
   },
@@ -56,7 +56,7 @@ module.exports = {
   getIssueOne: async(issue_id) => {
     const issueObject = {}
     const issueDate = await Issue.findOne({
-      attributes:['promise_year', 'promise_month', 'promise_day', 'promise_time'],
+      attributes:['category','promise_year', 'promise_month', 'promise_day', 'promise_time'],
       where:{
         id: `${issue_id}`,
       },

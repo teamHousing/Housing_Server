@@ -16,5 +16,4 @@ module.exports={
             console.error(err)
             return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,"호수 불러오기 실패"))
         }
-    }
 }

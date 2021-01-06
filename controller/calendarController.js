@@ -8,6 +8,10 @@ module.exports = {
   // 캘린더 선택(월) 스케쥴 보여주기
   getMonthSchedule: async (req, res) => {
     const {select_year, select_month} = req.body
+    if(!select_year || !select_month){
+      console.log('필요한 값이 없습니다.');
+      return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,responseMessage.NULL_VALUE));
+    }
     try{
       const scheduleList = await calendarService.getScheduleList(select_year, select_month);
       return res.status(statusCode.OK).send(util.success(statusCode.OK, '스케쥴 리스트 불러오기 성공', scheduleList));
@@ -18,6 +22,10 @@ module.exports = {
   },
   getDetailNotice: async (req, res) => {
     const {notice_id} = req.body;
+    if(!notice_id){
+      console.log('필요한 값이 없습니다.');
+      return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,responseMessage.NULL_VALUE));
+    }
     try{
       const noticeDetail = await calendarService.getNoticeOne(notice_id);
       return res.status(statusCode.OK).send(util.success(statusCode.OK, '공지사항 상세보기 성공', noticeDetail));
@@ -28,6 +36,10 @@ module.exports = {
   },
   getDetailIssue: async (req, res) => {
     const {issue_id} = req.body;
+    if(!issue_id){
+      console.log('필요한 값이 없습니다.');
+      return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,responseMessage.NULL_VALUE));
+    }
     try{
       const issueDetail = await calendarService.getIssueOne(issue_id);
       return res.status(statusCode.OK).send(util.success(statusCode.OK, '약속일정 상세보기 성공', issueDetail));
