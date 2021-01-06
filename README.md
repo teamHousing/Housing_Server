@@ -114,3 +114,17 @@ master
   }
 }
 ```
+
+## 🖥 Develop Framework & Emviroment
+ 
+```
+- Node.js : 자바스크립트 런타임
+- Express : Node.js웹 애플리케이션 프레임워크
+- NPM : 자바 스크립트 패키지 관리자
+- vscode : 자바스크립트 편집기
+- MySQL : 데이터베이스
+- MySQL Workbench : mysql데이터베이스 시각 tool
+- AWS EC2 : 클라우드 환경 서버 시스템
+- AWS RDS : 클라우드 환경 데이터베이스 시스템 
+- AWS S3 : 클라우드 환경 
+```
