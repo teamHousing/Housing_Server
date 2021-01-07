@@ -18,6 +18,7 @@ module.exports={
         console.log(...reply.user_status)
         const user_status = [3]
         const owner_status = [...reply.owner_status,2]
+        await Issue.update({progress:1},{where:{id:id}})
         await Reply.update({user_status,owner_status},{where:{issue_id:id}})
         }catch(err){
             throw err

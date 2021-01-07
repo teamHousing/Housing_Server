@@ -10,7 +10,13 @@ module.exports=function async(sequelize,DataTypes){
             type : DataTypes.STRING
         },
         hope_time:{
-            type : DataTypes.STRING
+            type : DataTypes.STRING,
+            set:function(val){
+                return this.setDataValue('hope_time',JSON.stringify(val))
+            },
+            get:function(){
+                return JSON.parse(this.getDataValue('hope_time'))
+            }
         },
         response_time:{
             type : DataTypes.STRING

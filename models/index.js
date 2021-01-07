@@ -38,8 +38,8 @@ db.Issue.belongsTo(db.HouseInfo)
 db.Issue.hasMany(db.Reply,{onDelete:'cascade',foreignKey:'issue_id'})
 db.Reply.belongsTo(db.Issue)
 
-//1:N *User : Authentication
-db.User.hasMany(db.Authentication,{onDelete:'cascade',foreignKey:'user_id'})
-db.Authentication.belongsTo(db.User)
+// //1:N *User : Authentication
+// db.User.hasMany(db.Authentication,{onDelete:'cascade',foreignKey:'user_id'})
+// db.Authentication.belongsTo(db.User)
 
 module.exports = db;

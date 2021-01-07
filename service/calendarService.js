@@ -63,13 +63,21 @@ module.exports = {
     });
     const issueDateString = issueDate.promise_year.toString() + '.' + issueDate.promise_month.toString() + '.' + issueDate.promise_day.toString() + ' ' + issueDate.promise_time.toString();
     const issueOne = await Issue.findOne({
-      attributes:['solution_method','issue_title', 'issue_contents'],
+      attributes:['user_id', 'solution_method','issue_title', 'issue_contents'],
       where:{
         id: `${issue_id}`,
       },
     });
     issueObject.issueDetail = issueOne;
     issueObject.issueDate = issueDateString;
+    console.log(issueOne.user_id);
+    issueObject.issueUnit = (await User.findOne({
+      attributes: ['unit'],
+      where: {
+        id: `${issueOne.user_id}`,
+      },
+    })).unit;
+  
     console.log(issueObject);
     return issueObject;
   },
