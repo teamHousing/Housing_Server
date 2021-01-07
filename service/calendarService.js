@@ -63,7 +63,7 @@ module.exports = {
     });
     const issueDateString = issueDate.promise_year.toString() + '.' + issueDate.promise_month.toString() + '.' + issueDate.promise_day.toString() + ' ' + issueDate.promise_time.toString();
     const issueOne = await Issue.findOne({
-      attributes:['issue_title', 'issue_contents'],
+      attributes:['solution_method','issue_title', 'issue_contents'],
       where:{
         id: `${issue_id}`,
       },

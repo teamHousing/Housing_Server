@@ -18,11 +18,13 @@ module.exports={
                 building,
                 unit,
             });
-            const houseInfoId = (await User.findOne({where:{type:0,address:address}})).house_info_id
-            console.log('hosueInfoId:',houseInfoId)
+            if(type==1){
+              const houseInfoId = (await User.findOne({where:{type:0,address:address}})).house_info_id
+             console.log('hosueInfoId:',houseInfoId)
             const houseInfo = await HouseInfo.findByPk(houseInfoId)
             console.log('houseInfo:',houseInfo)
             await houseInfo.addUsers(user)
+            }
             return user
         } catch(err){
             throw err;
