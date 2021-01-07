@@ -20,5 +20,35 @@ module.exports = {
             console.error(err)
             return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, "호수 불러오기 실패"))
         }
+    },
+    getHouseInformation:async(req,res)=>{
+        const {id} = req.decoded
+        try{
+            const houseInfo= await houseInfoService.getHouseInformation(id)
+            return res.status(statusCode.OK).send(util.success(statusCode.OK,"집정보 불러오기 성공",houseInfo))
+        }catch(err){
+            console.error(err)
+            return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,"집정보 불러오기 실패"))
+        }
+    },
+    getNoticeDetail:async(req,res)=>{
+        const {id} = req.params//notice pk
+        try{
+            const notice = await houseInfoService.getNoticeDetail(id)
+            return res.status(statusCode.OK).send(util.success(statusCode.OK,"공지사항 상세보기 성공",notice))
+        }catch(err){
+            console.error(err)
+            return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,"공지사항 상세보기 실패"))
+        }
+    },
+    setNotice:async(req,res)=>{
+        const {notice_title,notice_contents,} = req.body
+        try{
+            await houseInfoService.setNotice()
+            return res.status(statusCode.OK).send(util.success(statusCode.OK,"공지사항 작성 성공"))
+        }catch(err){
+            console.error(err)
+            return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,"공지사항 작성하기 실패"))
+        }
     }
 }

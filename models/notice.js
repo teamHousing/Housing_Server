@@ -18,6 +18,9 @@ module.exports=function async(sequelize,DataTypes){
         notice_time:{
             type:DataTypes.STRING
         },
+        post_writer:{
+            type:DataTypes.DATEONLY
+        }
     },{
         freezeTableName:true,
         timestamps:true,
