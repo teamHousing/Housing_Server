@@ -25,13 +25,13 @@ module.exports = {
                         [Op.lt]: 2
                     }
                 },
-                attributes: ['id', 'issue_title', 'issue_contents', 'progress']
+                attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
             })
             completeList = await Issue.findAll({
                 where: {
                     progress: 2
                 },
-                attributes: ['id', 'issue_title', 'issue_contents', 'progress']
+                attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
             })
             issueList.unit=`전체 호수`
         }else if(type==0 && convert_unit>0){
@@ -52,14 +52,14 @@ module.exports = {
                         [Op.lt]: 2
                     }
                 },
-                attributes: ['id', 'issue_title', 'issue_contents', 'progress']
+                attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
             })
             completeList = await Issue.findAll({
                 where: {
                     user_id:user_id,
                     progress: 2
                 },
-                attributes: ['id', 'issue_title', 'issue_contents', 'progress']
+                attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
             })
             issueList.unit=`${unit}호`
         }
@@ -72,14 +72,14 @@ module.exports = {
                         [Op.lt]: 2
                     }
                 },
-                attributes: ['id', 'issue_title', 'issue_contents', 'progress']
+                attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
             })
             completeList = await Issue.findAll({
                 where: {
                     user_id:id,
                     progress: 2
                 },
-                attributes: ['id', 'issue_title', 'issue_contents', 'progress']
+                attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
             })
         }else{
             return undefined
