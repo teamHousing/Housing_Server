@@ -16,5 +16,8 @@ module.exports={
     getNoticeDetail:async(id)=>{
         const notice = await Notice.findOne({where:{id},attributes:{exclude:['createdAt','updatedAt','HouseInfoId']}})
         return notice
+    },
+    setNotice:async()=>{
+        
     }
 }

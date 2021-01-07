@@ -42,6 +42,13 @@ module.exports = {
         }
     },
     setNotice:async(req,res)=>{
-
+        const {notice_title,notice_contents,} = req.body
+        try{
+            await houseInfoService.setNotice()
+            return res.status(statusCode.OK).send(util.success(statusCode.OK,"공지사항 작성 성공"))
+        }catch(err){
+            console.error(err)
+            return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,"공지사항 작성하기 실패"))
+        }
     }
 }
