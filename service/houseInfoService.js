@@ -17,7 +17,8 @@ module.exports={
         const notice = await Notice.findOne({where:{id},attributes:{exclude:['createdAt','updatedAt','HouseInfoId']}})
         return notice
     },
-    setNotice:async()=>{
-        
+    setNotice:async(house_info_id,notice_title,notice_contents,notice_option)=>{
+        const houseInfo = await findByPk(house_info_id)
+        const newNotice = await Notice.create({})
     }
 }
