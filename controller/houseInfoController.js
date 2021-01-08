@@ -42,7 +42,8 @@ module.exports = {
         }
     },
     setNotice:async(req,res)=>{
-        const {house_info_id,notice_title,notice_contents,notice_option} = req.body
+        const {house_info_id} = req.params
+        const {notice_title,notice_contents,notice_option} = req.body
         if(!notice_title||!notice_contents){
             return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,responseMessage.NULL_VALUE))
         }
