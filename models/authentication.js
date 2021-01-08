@@ -1,7 +1,7 @@
 module.exports=function async(sequelize,DataTypes){
     return sequelize.define('Authentication',{
         unit:{ //동
-            type:DataTypes.STRING
+            type:DataTypes.INTEGER
         },
         authentication_number:{ //인증번호
             type:DataTypes.INTEGER,
