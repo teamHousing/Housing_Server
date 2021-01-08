@@ -25,12 +25,14 @@ module.exports = {
                         [Op.lt]: 2
                     }
                 },
+                order:[['updatedAt','DESC']],
                 attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
             })
             completeList = await Issue.findAll({
                 where: {
                     progress: 2
                 },
+                order:[['updatedAt','DESC']],
                 attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
             })
             issueList.unit=`전체 호수`
@@ -52,6 +54,7 @@ module.exports = {
                         [Op.lt]: 2
                     }
                 },
+                order:[['updatedAt','DESC']],
                 attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
             })
             completeList = await Issue.findAll({
@@ -59,6 +62,7 @@ module.exports = {
                     user_id:user_id,
                     progress: 2
                 },
+                order:[['updatedAt','DESC']],
                 attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
             })
             issueList.unit=`${unit}호`
@@ -72,6 +76,7 @@ module.exports = {
                         [Op.lt]: 2
                     }
                 },
+                order:[['updatedAt','DESC']],
                 attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
             })
             completeList = await Issue.findAll({
