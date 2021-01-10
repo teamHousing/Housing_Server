@@ -10,7 +10,8 @@ module.exports = {
       where: {
         email: email,
         password: password
-      }
+      },
+      attributes:['id','type']
     })
     console.log('user', user)
     return user

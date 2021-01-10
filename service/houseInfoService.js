@@ -5,7 +5,7 @@ const moment = require('moment')
 
 module.exports={
     getUnit:async(address)=>{
-        const unitList = await User.findAll({where:{type:1,address:address},attributes:['id''unit','house_info_id']})
+        const unitList = await User.findAll({where:{type:1,address:address},attributes:['id','unit','house_info_id']})
         return unitList
     },
     getHouseInformation:async(id)=>{
