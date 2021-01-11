@@ -56,15 +56,7 @@ module.exports={
                 console.log('user:',user)
                 const token = await jwt.login(user)
                 res.cookie('user_token',token.accessToken)
-                return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.MEMBER_CREATE_SUCCESS, {
-                    type: 0,
-                    user_name: user.user_name,
-                    age: user.age,
-                    email: user.email,
-                    password: user.password,
-                    address: user.address,
-                    building: user.building,
-                }));
+                return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.MEMBER_CREATE_SUCCESS));
             } catch (err){
                 console.error(err);
                 return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.SIGN_UP_FAIL));
@@ -107,16 +99,7 @@ module.exports={
                 console.log('!!!!!!!!!!!!!!!1',user)
                 const token = await jwt.login(user)
                 res.cookie('user_token',token.accessToken)
-                return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SIGN_UP_SUCCESS,{
-                    type: user.type,
-                    user_name: user.user_name,
-                    age: user.age,
-                    email: user.email,
-                    password: user.password,
-                    address: user.address,
-                    building: user.building,
-                    unit: user.unit,
-                }));
+                return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SIGN_UP_SUCCESS));
 
             } catch (err){
                 console.log(err);
