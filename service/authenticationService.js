@@ -33,6 +33,14 @@ module.exports = {
       console.error(err);
     }
   },
+  checkAuthenticationNumber: async(authentication_number) => {
+    const alreadyAuthenticationNumber = await Authentication.findOne({
+      where: {
+        authentication_number: authentication_number,
+      }
+    });
+    return alreadyAuthenticationNumber;
+  },
 }
 
 const getRandomInt= async(min, max) => {
