@@ -29,8 +29,44 @@ module.exports = {
       }
     });
     
+    const convertNoticeList = []
+    noticeList.map((v,i)=>{
+      const convertNotice = {}
+      convertNotice.isNotice = 1
+      convertNotice.id = v.id
+      convertNotice.category = null
+      convertNotice.solution_method = null
+      convertNotice.year= v.notice_year
+      convertNotice.month = v.notice_month
+      convertNotice.day = v.notice_day
+      convertNotice.time = null
+      convertNotice.title = v.notice_title
+      convertNotice.contents = v.notice_contents
+      convertNoticeList[i]=convertNotice
+    })
+
+    const convertIssueList = []
+    issueList.map((v,i)=>{
+      const convertIssue = {}
+      convertIssue.isNotice = 0
+      convertIssue.id = v.id
+      convertIssue.category = v.category
+      convertIssue.solution_method = v.solution_method
+      convertIssue.year= v.promise_year
+      convertIssue.month = v.promise_month
+      convertIssue.day = v.promise_day
+      convertIssue.time = v.promise_time
+      convertIssue.title = v.issue_title
+      convertIssue.contents = v.issue_contents
+      convertIssueList[i]=convertIssue
+    })
+
+
     console.log(noticeList, issueList);
-    return [noticeList, issueList];
+    return {
+      notice: convertNoticeList,
+      issue: convertIssueList,
+    };
   },
   getNoticeOne: async(notice_id) => {
     const noticeObject = {};
