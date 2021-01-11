@@ -11,7 +11,7 @@ module.exports={
     getHouseInformation:async(id)=>{
         const house_info_id = (await User.findByPk(id)).house_info_id
         const houseInfo = await HouseInfo.findOne({where:{id:house_info_id},attributes:{exclude:['createdAt','updatedAt']}})
-        const notice = await Notice.findAll({where:{house_info_id},order:[['post_writer','DESC']],attributes:['id','notice_title','notice_contents']})
+        const notice = await Notice.findAll({where:{house_info_id},order:[['updatedAt','DESC']],attributes:['id','notice_title','notice_contents']})
         return {houseInfo,notice}
     },
     getNoticeDetail:async(id)=>{
