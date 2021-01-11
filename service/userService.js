@@ -3,6 +3,8 @@ const {
   Authentication,
   HouseInfo
 } = require('../models')
+const user = require('../models/user')
+const statusCode = require('../modules/statusCode')
 
 module.exports = {
   login: async (email, password) => {
@@ -34,7 +36,7 @@ module.exports = {
             address: address
           }
         })).house_info_id
-        console.log('hosueInfoId:', houseInfoId)
+        console.log('houseInfoId:', houseInfoId)
         const houseInfo = await HouseInfo.findByPk(houseInfoId)
         console.log('houseInfo:', houseInfo)
         await houseInfo.addUser(user)
