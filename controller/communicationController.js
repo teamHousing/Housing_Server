@@ -40,9 +40,9 @@ module.exports={
             issue_img = req.files.map(files=>files.location)
         }
         const {id} = req.decoded
-        const {is_promise,category,issue_title,issue_contents,requested_term,promise_option} = req.body
-        console.log(`is_promise:${is_promise}, category:${category}, title:${issue_title}, contents:${issue_contents}, requested_term:${requested_term}, promise_option:${promise_option}`)
-        if(is_promise&&(!issue_title||!issue_contents||!requested_term||!promise_option)){
+        const {is_promise,category,issue_title,issue_contents,requested_term} = req.body
+        console.log(`is_promise:${is_promise}, category:${category}, title:${issue_title}, contents:${issue_contents}, requested_term:${requested_term}`)
+        if(is_promise&&(!issue_title||!issue_contents||!requested_term)){
             console.log('약속있는 문의')
             return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,responseMessage.NULL_VALUE))
         }else if(!is_promise&&(!issue_title||!issue_contents||!requested_term)){
@@ -50,11 +50,25 @@ module.exports={
             return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,responseMessage.NULL_VALUE))
         }
         try{
-            await communicationService.setIssue(id,req.body,issue_img)
-            return res.status(statusCode.OK).send(util.success(statusCode.OK,'문의 등록완료'))
+            const issue_id = await communicationService.setIssue(id,req.body,issue_img)
+            return res.status(statusCode.OK).send(util.success(statusCode.OK,'문의 등록완료',{issue_id:issue_id}))
         }catch(err){
             console.error(err)
             return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,'문의 등록 실패'))
+        }
+    },
+    setPromiseOption:async(req,res)=>{
+        const {id}=req.params // 문의사항id
+        const {promise_option} = req.body
+        try{
+            const promise_option_check = await communicationService.setPromiseOption(id,promise_option)
+            if(promise_option_check==0){
+                return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,"약속시간 등록 실패"))
+            }
+            return res.status(statusCode.OK).send(util.success(statusCode.OK,"약속시간 등록 성공"))
+        }catch(err){
+            console.log(err)
+            return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,"약속시간 등록 실패"))
         }
     },
     //문의한 약속옵션 리스트

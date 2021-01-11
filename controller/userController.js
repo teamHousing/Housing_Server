@@ -54,6 +54,8 @@ module.exports={
                 // const house_info = await userService.set_house_info(user_name)
                 const user = await userService.registration(type, user_name, age, email, password, address, building);
                 console.log('user:',user)
+                const token = await jwt.login(user)
+                res.cookie('user_token',token.accessToken)
                 return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.MEMBER_CREATE_SUCCESS, {
                     type: 0,
                     user_name: user.user_name,
@@ -103,7 +105,8 @@ module.exports={
                 user.building = addressInformation.building;
                 user.unit = addressInformation.unit;
                 console.log('!!!!!!!!!!!!!!!1',user)
-                
+                const token = await jwt.login(user)
+                res.cookie('user_token',token.accessToken)
                 return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SIGN_UP_SUCCESS,{
                     type: user.type,
                     user_name: user.user_name,

@@ -128,12 +128,18 @@ module.exports = {
             progress: 0,
             is_promise: is_promise
         })
+        console.log('Issue!!!',addIssue.id)
         const user = await User.findByPk(id)
         await user.addIssue(addIssue)
         const reply = await Reply.create()
         await addIssue.addReply(reply)
         const house = await HouseInfo.findByPk(user.house_info_id)
         await house.addIssue(addIssue)
+        return addIssue.id
+    },
+    setPromiseOption:async(id,promise_option)=>{
+        const issue = await Issue.update({promise_option},{where:{id: id}})
+        return issue
     },
     getOptionList: async (id) => {
         const hopeList = await Issue.findOne({
