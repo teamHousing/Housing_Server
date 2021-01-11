@@ -19,7 +19,7 @@ module.exports={
             const token = await jwt.login(user)
             res.cookie('user_token',token.accessToken)
             console.log(token)
-            return res.status(statusCode.OK).send(util.success(statusCode.OK,responseMessage.SIGN_IN_SUCCESS))
+            return res.status(statusCode.OK).send(util.success(statusCode.OK,responseMessage.SIGN_IN_SUCCESS,user))
         }catch(err){
             console.error(err)
             return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,responseMessage.SIGN_IN_FAIL))
@@ -54,15 +54,9 @@ module.exports={
                 // const house_info = await userService.set_house_info(user_name)
                 const user = await userService.registration(type, user_name, age, email, password, address, building);
                 console.log('user:',user)
-                return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.MEMBER_CREATE_SUCCESS, {
-                    type: 0,
-                    user_name: user.user_name,
-                    age: user.age,
-                    email: user.email,
-                    password: user.password,
-                    address: user.address,
-                    building: user.building,
-                }));
+                const token = await jwt.login(user)
+                res.cookie('user_token',token.accessToken)
+                return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.MEMBER_CREATE_SUCCESS));
             } catch (err){
                 console.error(err);
                 return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.SIGN_UP_FAIL));
@@ -103,17 +97,9 @@ module.exports={
                 user.building = addressInformation.building;
                 user.unit = addressInformation.unit;
                 console.log('!!!!!!!!!!!!!!!1',user)
-                
-                return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SIGN_UP_SUCCESS,{
-                    type: user.type,
-                    user_name: user.user_name,
-                    age: user.age,
-                    email: user.email,
-                    password: user.password,
-                    address: user.address,
-                    building: user.building,
-                    unit: user.unit,
-                }));
+                const token = await jwt.login(user)
+                res.cookie('user_token',token.accessToken)
+                return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SIGN_UP_SUCCESS));
 
             } catch (err){
                 console.log(err);

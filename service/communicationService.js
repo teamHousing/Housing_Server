@@ -25,13 +25,15 @@ module.exports = {
                         [Op.lt]: 2
                     }
                 },
-                attributes: ['id', 'issue_title', 'issue_contents', 'progress']
+                order:[['updatedAt','DESC']],
+                attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
             })
             completeList = await Issue.findAll({
                 where: {
                     progress: 2
                 },
-                attributes: ['id', 'issue_title', 'issue_contents', 'progress']
+                order:[['updatedAt','DESC']],
+                attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
             })
             issueList.unit=`전체 호수`
         }else if(type==0 && convert_unit>0){
@@ -52,14 +54,16 @@ module.exports = {
                         [Op.lt]: 2
                     }
                 },
-                attributes: ['id', 'issue_title', 'issue_contents', 'progress']
+                order:[['updatedAt','DESC']],
+                attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
             })
             completeList = await Issue.findAll({
                 where: {
                     user_id:user_id,
                     progress: 2
                 },
-                attributes: ['id', 'issue_title', 'issue_contents', 'progress']
+                order:[['updatedAt','DESC']],
+                attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
             })
             issueList.unit=`${unit}호`
         }
@@ -72,14 +76,15 @@ module.exports = {
                         [Op.lt]: 2
                     }
                 },
-                attributes: ['id', 'issue_title', 'issue_contents', 'progress']
+                order:[['updatedAt','DESC']],
+                attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
             })
             completeList = await Issue.findAll({
                 where: {
                     user_id:id,
                     progress: 2
                 },
-                attributes: ['id', 'issue_title', 'issue_contents', 'progress']
+                attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
             })
         }else{
             return undefined
@@ -123,12 +128,18 @@ module.exports = {
             progress: 0,
             is_promise: is_promise
         })
+        console.log('Issue!!!',addIssue.id)
         const user = await User.findByPk(id)
         await user.addIssue(addIssue)
         const reply = await Reply.create()
         await addIssue.addReply(reply)
         const house = await HouseInfo.findByPk(user.house_info_id)
         await house.addIssue(addIssue)
+        return addIssue.id
+    },
+    setPromiseOption:async(id,promise_option)=>{
+        const issue = await Issue.update({promise_option},{where:{id: id}})
+        return issue
     },
     getOptionList: async (id) => {
         const hopeList = await Issue.findOne({

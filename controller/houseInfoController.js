@@ -42,9 +42,13 @@ module.exports = {
         }
     },
     setNotice:async(req,res)=>{
-        const {notice_title,notice_contents,} = req.body
+        const {house_info_id} = req.params
+        const {notice_title,notice_contents,notice_option} = req.body
+        if(!notice_title||!notice_contents){
+            return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,responseMessage.NULL_VALUE))
+        }
         try{
-            await houseInfoService.setNotice()
+            await houseInfoService.setNotice(house_info_id,notice_title,notice_contents,notice_option)
             return res.status(statusCode.OK).send(util.success(statusCode.OK,"공지사항 작성 성공"))
         }catch(err){
             console.error(err)
