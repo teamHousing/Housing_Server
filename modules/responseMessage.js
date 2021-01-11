@@ -16,6 +16,8 @@ module.exports={
     INVALID_AUTHENTICATION_NUMBER: "유효하지 않은 인증번호",
     CREATE_AUTHENTICATION_NUMBER_SUCCESS: "인증번호 생성 성공",
     CREATE_AUTHENTICATION_NUMBER_FAIL:"인증번호 생성 실패",
+    CHECK_AUTHENTICATION_NUMBER_FAIL: "인증번호 검사 실패",
+    CHECK_AUTHENTICATION_NUMBER_SUCCESS: "인증번호 검사 성공",
     /* 회원가입 */
     SIGN_UP_SUCCESS: "회원가입성공",
     SIGN_UP_FAIL: "회원 가입 실패",
