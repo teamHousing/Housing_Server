@@ -29,22 +29,16 @@ module.exports={
         const {type} = req.params;
         // type : 0 : 집주인
         if (type == 0){
-            const {user_name, age, email, password, password_check} = req.body;
-            if(!user_name || !age || !email || !password || !password_check){
+            const {user_name, age, email, password} = req.body;
+            if(!user_name || !age || !email || !password){
                 console.log('필요한 값이 없습니다.');
                 return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
             }
             try{
-                console.log('test123');
                 const alreadyEmail = await userService.emailCheck(email);
                 if(alreadyEmail){
                     console.log('이미 존재하는 ID 입니다.');
                     return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.ALREADY_ID));
-                }
-                const correctPassword = await userService.passwordCheck(password, password_check);
-                if(!correctPassword){
-                    console.log('비밀번호가 일치하지 않습니다.');
-                    return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.MISS_MATCH_PW));
                 }
                 const {address, building} = req.body;
                 if(!address || !building){
@@ -66,8 +60,8 @@ module.exports={
             try{
                 const addressInformation = await userService.authentication_number_check(authentication_number);
                 //const addressInformation = await userService.getAddressInformation(authentication_number);
-                const {user_name, age, email, password, password_check} = req.body;
-                if(!user_name || !age || !email || !password || !password_check){
+                const {user_name, age, email, password} = req.body;
+                if(!user_name || !age || !email || !password){
                     console.log('필요한 값이 없습니다.');
                     return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
                 }
@@ -76,11 +70,6 @@ module.exports={
                         console.log('이미 존재하는 ID 입니다.');
                         return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.ALREADY_ID));
                     }
-                const correctPassword = await userService.passwordCheck(password, password_check);
-                if(!correctPassword){
-                    console.log('비밀번호가 일치하지 않습니다.');
-                    return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.MISS_MATCH_PW));
-                }
                 const user = await userService.registration(type, user_name, age, email, password, addressInformation.address, addressInformation.building, addressInformation.unit);
                 user.address = addressInformation.address;
                 user.building = addressInformation.building;
