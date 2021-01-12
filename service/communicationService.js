@@ -10,6 +10,7 @@ const moment = require('moment')
 
 module.exports = {
     getCommunicationList: async (id,type,unit) => {
+        console.log(id, type, unit)
         const time = moment().format("YYYY-MM-DD HH:mm")
         const issueList = {}
         const convert_unit = JSON.parse(unit)

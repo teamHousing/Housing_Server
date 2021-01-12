@@ -8,6 +8,7 @@ module.exports = {
     const {id, address} = req.decoded;
     const {building, unit} = req.body;
     if(!id || !address || !building || !unit){
+      console.log(`id:${id}, address:${address}, building:${building}, unit:${unit}`)
       console.log('필요한 값이 없습니다.');
       return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,responseMessage.NULL_VALUE)); 
     }
