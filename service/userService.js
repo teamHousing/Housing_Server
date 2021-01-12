@@ -68,13 +68,6 @@ module.exports = {
       throw err;
     }
   },
-  passwordCheck: async (password, password_check) => {
-    if (password == password_check) {
-      return 1;
-    } else {
-      return 0;
-    }
-  },
   authentication_number_check: async (authentication_number) => {
     try {
       const authentication_number_match = await Authentication.findOne({
