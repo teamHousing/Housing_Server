@@ -41,7 +41,7 @@ module.exports = {
       convertNotice.day = v.notice_day
       convertNotice.time = null
       convertNotice.title = v.notice_title
-      convertNotice.contents = v.notice_contents
+      convertNotice.contents = null
       convertNoticeList[i]=convertNotice
     })
 
