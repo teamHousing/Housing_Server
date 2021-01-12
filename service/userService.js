@@ -13,9 +13,8 @@ module.exports = {
         email: email,
         password: password
       },
-      attributes:['id','type']
+      attributes:['id','type','address','user_name']
     })
-    console.log('user', user)
     return user
   },
   registration: async (type, user_name, age, email, password, address, building, unit) => {
