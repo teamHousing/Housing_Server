@@ -19,6 +19,7 @@ module.exports={
             const token = await jwt.login(user)
             res.cookie('user_token',token.accessToken)
             console.log(token)
+            user.dataValues.user_token=token.accessToken
             return res.status(statusCode.OK).send(util.success(statusCode.OK,responseMessage.SIGN_IN_SUCCESS,user))
         }catch(err){
             console.error(err)
