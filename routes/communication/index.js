@@ -5,7 +5,7 @@ const upload = require('../../modules/multer')
 const authUtil = require('../../middlewares/authUtil')
 
 router.get('/:unit',authUtil.checkToken,communicationController.getAllIssue)//전체리스트
-router.get('/detail/:id',authUtil.onlyTenant,communicationController.getDetailIssue)//문의 상세보기
+router.get('/detail/:id',authUtil.checkToken,communicationController.getDetailIssue)//문의 상세보기
 router.post('/image',authUtil.onlyTenant,upload.array('issue_img',5),communicationController.setIssueImage)//문의작성(사진)
 router.post('/:id',authUtil.onlyTenant,communicationController.setIssue)//문의작성(정보)
 router.post('/:id/promise-option',authUtil.onlyTenant,communicationController.setPromiseOption)//문의작성-약속시간
