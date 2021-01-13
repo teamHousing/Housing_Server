@@ -122,7 +122,7 @@ module.exports = {
         await newIssue.addReply(reply)
         const house = await HouseInfo.findByPk(user.house_info_id)
         await house.addIssue(newIssue)
-        return {"issue_id":JSON.parse(newIssue.id)}
+        return {"issue_id":newIssue.id}
     },
     setIssue: async (id,{
         is_promise,
