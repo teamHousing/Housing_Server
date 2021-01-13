@@ -56,8 +56,7 @@ module.exports = {
                     user_id:user_id,
                     progress: {
                         [Op.lt]: 2
-                    },
-                    house_info_id:house_info_id
+                    }
                 },
                 order:[['updatedAt','DESC']],
                 attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
@@ -65,8 +64,7 @@ module.exports = {
             completeList = await Issue.findAll({
                 where: {
                     user_id:user_id,
-                    progress: 2,
-                    house_info_id:house_info_id
+                    progress: 2
                 },
                 order:[['updatedAt','DESC']],
                 attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
@@ -80,8 +78,7 @@ module.exports = {
                     user_id:id,
                     progress: {
                         [Op.lt]: 2
-                    },
-                    house_info_id:house_info_id
+                    }
                 },
                 order:[['updatedAt','DESC']],
                 attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
@@ -89,8 +86,7 @@ module.exports = {
             completeList = await Issue.findAll({
                 where: {
                     user_id:id,
-                    progress: 2,
-                    house_info_id:house_info_id
+                    progress: 2
                 },
                 attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
             })
@@ -116,6 +112,7 @@ module.exports = {
                 attributes: ['id', `${convertStatus(type)}`]
             }]
         })
+        console.log(issueDetail)
         return issueDetail
     },
     setIssueImage:async(id,issue_img)=>{
@@ -175,6 +172,7 @@ module.exports = {
         return hopeList
     },
     promise_confirmation: async (id, promise_option) => {
+        console.log('!!!!!!!!!!!!!!!!!!!!ID:',id,'promise_option:',promise_option)
         try {
             const promise_date = moment(promise_option[0])
             console.log(`year: ${promise_date.year()}, month: ${promise_date.month() + 1}, day: ${promise_date.date()}, time:${promise_option[1]}, method:${promise_option[2]}`)
