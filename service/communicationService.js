@@ -112,7 +112,12 @@ module.exports = {
                 attributes: ['id', `${convertStatus(type)}`]
             }]
         })
-        console.log(issueDetail)
+        if(type == 0){
+            issueDetail.Replies[0].dataValues.user_status=null
+        }else{
+            issueDetail.Replies[0].dataValues.owner_status=null
+        }
+        console.log('리플테스트!:',issueDetail.Replies[0])
         return issueDetail
     },
     setIssueImage:async(id,issue_img)=>{
