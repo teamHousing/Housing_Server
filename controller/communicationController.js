@@ -33,13 +33,23 @@ module.exports={
             return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,'디테일 불러오기 실패'))
         }
     },
-    //소통하기 문의 등록
-    setIssue:async(req,res)=>{
-        var issue_img 
+    //소통하기 문의 등록(이미지)
+    setIssueImage:async(req,res)=>{
+        const {id} = req.decoded
+        var issue_img
         if(req.files){
             issue_img = req.files.map(files=>files.location)
         }
-        const {id} = req.decoded
+        try{
+            const issue_id = await communicationService.setIssueImage(id,issue_img)
+            return res.status(statusCode.OK).send(util.success(statusCode.OK,'이미지등록 완료',issue_id))
+        }catch(err){
+            return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,'이미지등록 실패'))
+        }
+    },
+    //소통하기 문의 등록
+    setIssue:async(req,res)=>{
+        const {id} = req.params
         const {is_promise,category,issue_title,issue_contents,requested_term} = req.body
         console.log(`is_promise:${is_promise}, category:${category}, title:${issue_title}, contents:${issue_contents}, requested_term:${requested_term}`)
         if(is_promise&&(!issue_title||!issue_contents||!requested_term)){
@@ -50,8 +60,11 @@ module.exports={
             return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,responseMessage.NULL_VALUE))
         }
         try{
-            const issue_id = await communicationService.setIssue(id,req.body,issue_img)
-            return res.status(statusCode.OK).send(util.success(statusCode.OK,'문의 등록완료',{issue_id:issue_id}))
+            const update_issue = await communicationService.setIssue(id,req.body)
+            if(update_issue==0){
+                return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,"문의 등록 실패"))
+            }
+            return res.status(statusCode.OK).send(util.success(statusCode.OK,'문의 등록완료',{"issue_id":JSON.parse(id)}))
         }catch(err){
             console.error(err)
             return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,'문의 등록 실패'))
