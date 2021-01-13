@@ -80,4 +80,17 @@ module.exports = {
       throw err;
     }
   },
+  getBuilding: async (address) => {
+    try{
+      const building = (await User.findOne({
+        where: {
+          type: 0,
+          address: address,
+        },
+      })).building;
+      return building;
+    } catch(err){
+      console.error(err);
+    }
+  },
 }
