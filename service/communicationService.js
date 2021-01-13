@@ -172,7 +172,7 @@ module.exports = {
         return hopeList
     },
     promise_confirmation: async (id, promise_option) => {
-        console.log('!!!!!!!!!!!!!!!!!!!!ID:',id,'promise_option:',promise_option)
+        console.log('!!!!!!!!!!!!!!!!!!!!ID:',id,'promise_option!!:',promise_option)
         try {
             const promise_date = moment(promise_option[0])
             console.log(`year: ${promise_date.year()}, month: ${promise_date.month() + 1}, day: ${promise_date.date()}, time:${promise_option[1]}, method:${promise_option[2]}`)
