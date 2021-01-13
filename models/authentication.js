@@ -10,9 +10,6 @@ module.exports=function async(sequelize,DataTypes){
         address:{ //주소
             type:DataTypes.STRING
         },
-        building:{ //건물명(동)
-            type:DataTypes.STRING
-        }
     },{
         freezeTableName:true,
         timestamp:true,

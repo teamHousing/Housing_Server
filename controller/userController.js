@@ -4,6 +4,7 @@ const statusCode = require('../modules/statusCode')
 const jwt = require('../modules/jwt')
 const {userService} = require('../service')
 const authentication = require('../models/authentication')
+const { User } = require('../models')
 
 module.exports={
     login:async(req,res)=>{
@@ -61,6 +62,7 @@ module.exports={
             try{
                 const addressInformation = await userService.authentication_number_check(authentication_number);
                 //const addressInformation = await userService.getAddressInformation(authentication_number);
+                const building = await userService.getBuilding(addressInformation.address);
                 const {user_name, age, email, password} = req.body;
                 if(!user_name || !age || !email || !password){
                     console.log('필요한 값이 없습니다.');
@@ -71,10 +73,7 @@ module.exports={
                         console.log('이미 존재하는 ID 입니다.');
                         return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.ALREADY_ID));
                     }
-                const user = await userService.registration(type, user_name, age, email, password, addressInformation.address, addressInformation.building, addressInformation.unit);
-                user.address = addressInformation.address;
-                user.building = addressInformation.building;
-                user.unit = addressInformation.unit;
+                const user = await userService.registration(type, user_name, age, email, password, addressInformation.address, building, addressInformation.unit);
                 const token = await jwt.login(user)
                 res.cookie('user_token',token.accessToken)
                 return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SIGN_UP_SUCCESS));

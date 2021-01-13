@@ -6,14 +6,13 @@ const { authenticationService } = require('../service');
 module.exports = {
   setAuthenticationNumber: async (req, res) => {
     const {id, address} = req.decoded;
-    const {building, unit} = req.body;
-    if(!id || !address || !building || !unit){
-      console.log(`id:${id}, address:${address}, building:${building}, unit:${unit}`)
+    const {unit} = req.body;
+    if(!id || !address || !unit){
       console.log('필요한 값이 없습니다.');
       return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,responseMessage.NULL_VALUE)); 
     }
     try{
-      const authentication_number = await authenticationService.createAuthenticationNumber(id, address, building, unit);
+      const authentication_number = await authenticationService.createAuthenticationNumber(id, address, unit);
       return res.status(statusCode.OK).send(util.success(statusCode.OK,responseMessage.CREATE_AUTHENTICATION_NUMBER_SUCCESS, {'authentication_number': authentication_number}));
     } catch(err){
       console.error(err);

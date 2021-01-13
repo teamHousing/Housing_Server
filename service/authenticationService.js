@@ -4,7 +4,7 @@ const Op = sequelize.Op;
 const moment = require('moment')
 
 module.exports = {
-  createAuthenticationNumber: async (id, address, building, unit) => {
+  createAuthenticationNumber: async (id, address, unit) => {
     try{
       do{
         const randomNumber = await getRandomInt(1000, 10000);
@@ -20,7 +20,6 @@ module.exports = {
         }else{
           const authentication_information = await Authentication.create({
             address,
-            building,
             unit,
             authentication_number: `${randomNumber}`,
           });
