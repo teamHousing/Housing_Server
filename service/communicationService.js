@@ -18,13 +18,15 @@ module.exports = {
         var completeLength
         var incompleteList
         var completeList
+        const house_info_id = (await User.findByPk(id)).house_info_id
         if(type==0 && convert_unit==-1){
             console.log('집주인 전체리스트')
             incompleteList = await Issue.findAll({
                 where: {
                     progress: {
                         [Op.lt]: 2
-                    }
+                    },
+                    house_info_id:house_info_id
                 },
                 order:[['updatedAt','DESC']],
                 attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
@@ -33,6 +35,7 @@ module.exports = {
                 where: {
                     progress: 2
                 },
+                house_info_id:house_info_id,
                 order:[['updatedAt','DESC']],
                 attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
             })
@@ -40,7 +43,7 @@ module.exports = {
         }else if(type==0 && convert_unit>0){
             console.log(`집주인 ${unit}호 문의사항`)
             console.log('unit:',Number(unit))
-            const user = await User.findOne({where:{unit:Number(unit)}})
+            const user = await User.findOne({where:{house_info_id:house_info_id,unit:Number(unit)}})
             console.log('user:',user)
             if(user===null){
                 console.log('hi')
@@ -53,7 +56,8 @@ module.exports = {
                     user_id:user_id,
                     progress: {
                         [Op.lt]: 2
-                    }
+                    },
+                    house_info_id:house_info_id
                 },
                 order:[['updatedAt','DESC']],
                 attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
@@ -61,7 +65,8 @@ module.exports = {
             completeList = await Issue.findAll({
                 where: {
                     user_id:user_id,
-                    progress: 2
+                    progress: 2,
+                    house_info_id:house_info_id
                 },
                 order:[['updatedAt','DESC']],
                 attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
@@ -75,7 +80,8 @@ module.exports = {
                     user_id:id,
                     progress: {
                         [Op.lt]: 2
-                    }
+                    },
+                    house_info_id:house_info_id
                 },
                 order:[['updatedAt','DESC']],
                 attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
@@ -83,7 +89,8 @@ module.exports = {
             completeList = await Issue.findAll({
                 where: {
                     user_id:id,
-                    progress: 2
+                    progress: 2,
+                    house_info_id:house_info_id
                 },
                 attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
             })
