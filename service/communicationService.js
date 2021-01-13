@@ -111,32 +111,48 @@ module.exports = {
         })
         return issueDetail
     },
-    setIssue: async (id, {
+    setIssueImage:async(id,issue_img)=>{
+        const newIssue = await Issue.create({
+            issue_img
+        })
+        console.log('id:',newIssue)
+        const user = await User.findByPk(id)
+        await user.addIssue(newIssue)
+        const reply = await Reply.create()
+        await newIssue.addReply(reply)
+        const house = await HouseInfo.findByPk(user.house_info_id)
+        await house.addIssue(newIssue)
+        return {"issue_id":JSON.parse(newIssue.id)}
+    },
+    setIssue: async (id,{
         is_promise,
         category,
         issue_title,
         issue_contents,
         requested_term,
         promise_option
-    }, issue_img) => {
-        const addIssue = await Issue.create({
+    }) => {
+        // const addIssue = await Issue.create({
+        //     category,
+        //     issue_title,
+        //     issue_contents,
+        //     requested_term,
+        //     promise_option,
+        //     issue_img,
+        //     progress: 0,
+        //     is_promise: is_promise
+        // })
+        const addIssue = await Issue.update({
             category,
             issue_title,
             issue_contents,
             requested_term,
             promise_option,
-            issue_img,
             progress: 0,
             is_promise: is_promise
-        })
-        console.log('Issue!!!',addIssue.id)
-        const user = await User.findByPk(id)
-        await user.addIssue(addIssue)
-        const reply = await Reply.create()
-        await addIssue.addReply(reply)
-        const house = await HouseInfo.findByPk(user.house_info_id)
-        await house.addIssue(addIssue)
-        return addIssue.id
+        },{where:{id:id}})
+        console.log('Issue!!!',addIssue)
+        return addIssue
     },
     setPromiseOption:async(id,promise_option)=>{
         const issue = await Issue.update({promise_option},{where:{id: id}})
