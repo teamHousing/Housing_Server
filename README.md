@@ -81,7 +81,7 @@ master
 
 | ERD |
 | ----------------------------------------------------------------------------------------- |
-![image](https://user-images.githubusercontent.com/57162257/103644770-3ce30180-4f9a-11eb-9376-5b9a0453c7c4.png)
+![image](https://user-images.githubusercontent.com/57162257/104607369-1ae92d80-56c4-11eb-8df2-ee8224485b80.png)
 
 
 ## 🖥 Dependencies module
