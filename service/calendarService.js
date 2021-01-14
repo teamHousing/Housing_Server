@@ -4,30 +4,41 @@ const Op = sequelize.Op;
 const moment = require('moment')
 
 module.exports = {
-  getScheduleList: async(select_year, select_month) => {
+  getScheduleList: async(id, address, type) => {
     // 선택월 기준 이전달과 다음달포함 총 3개월 공지사항
+    const house_info_id = (await User.findOne({
+      where:{
+        id: id,
+      }
+    })).house_info_id;
     const noticeList = await Notice.findAll({
       attributes:['id', 'notice_year','notice_month','notice_day', 'notice_title', 'notice_time'],
       where:{
-        [Op.or]:[
-          {[Op.and]:[{notice_year: `${select_month - 1 == 0 ? select_year - 1 : select_year}`},{notice_month: `${select_month - 1 == 0 ? 12 : select_month - 1}`}]},
-          {[Op.and]:[{notice_year: `${select_year}`},{notice_month: `${select_month}`}]},
-          {[Op.and]:[{notice_year: `${select_month + 1 == 13 ? select_year + 1 : select_year}`},{notice_month: `${select_month + 1 == 13 ? 1 : select_month + 1}`}]},
-        ]
+        house_info_id: house_info_id,
+        notice_month: {[Op.and]:{[Op.gte]:1, [Op.lte]: 12}},
       },
     });
     // 선택월 기준 이전달과 다음달포함 총 3개월 약속 일정
-    const issueList = await Issue.findAll({
-      attributes:['id', 'user_id','category', 'solution_method', 'promise_year','promise_month','promise_day', 'issue_title', 'issue_contents', 'promise_time'],
-      where:{
-        progress: 1,
-        [Op.or]:[
-          {[Op.and]:[{promise_year: `${select_month - 1 == 0 ? select_year - 1 : select_year}`},{promise_month: `${select_month - 1 == 0 ? 12 : select_month - 1}`}]},
-          {[Op.and]:[{promise_year: `${select_year}`},{promise_month: `${select_month}`}]},
-          {[Op.and]:[{promise_year: `${select_month + 1 == 13 ? select_year + 1 : select_year}`},{promise_month: `${select_month + 1 == 13 ? 1 : select_month + 1}`}]},
-        ]
-      }
-    });
+    if(type == 0){
+      var issueList = await Issue.findAll({
+        attributes:['id', 'user_id','category', 'solution_method', 'promise_year','promise_month','promise_day', 'issue_title', 'issue_contents', 'promise_time'],
+        where:{
+          progress: 1,
+          house_info_id: house_info_id,
+          promise_month: {[Op.and]: {[Op.gte]:1, [Op.lte]: 12}},
+        }
+      });
+    } else{
+      var issueList = await Issue.findAll({
+        attributes:['id', 'user_id','category', 'solution_method', 'promise_year','promise_month','promise_day', 'issue_title', 'issue_contents', 'promise_time'],
+        where:{
+          progress: 1,
+          user_id: id,
+          promise_month: {[Op.and]: {[Op.gte]:1, [Op.lte]: 12}},
+        }
+      });
+    }
+    
     
     const convertNoticeList = []
     noticeList.map((v,i)=>{
