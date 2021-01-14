@@ -36,8 +36,10 @@ module.exports={
     //소통하기 문의 등록(이미지)
     setIssueImage:async(req,res)=>{
         const {id} = req.decoded
+        console.log('id!!!',id)
         var issue_img
         if(req.files){
+            console.log('files test!!!!:',req.files)
             issue_img = req.files.map(files=>files.location)
         }
         console.log('issue_img!!!!!:',issue_img)
