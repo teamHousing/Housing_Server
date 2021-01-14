@@ -33,9 +33,9 @@ module.exports = {
             })
             completeList = await Issue.findAll({
                 where: {
-                    progress: 2
+                    progress: 2,
+                    house_info_id:house_info_id,
                 },
-                house_info_id:house_info_id,
                 order:[['updatedAt','DESC']],
                 attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
             })

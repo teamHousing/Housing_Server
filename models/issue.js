@@ -50,7 +50,7 @@ module.exports = function async (sequelize, DataTypes) {
         //     }
         // },
         promise_option: { //문의 약속 선택 사항
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(1000),
             defaultValue: '[]',
             set:function(val){
                 return this.setDataValue('promise_option',JSON.stringify(val))
