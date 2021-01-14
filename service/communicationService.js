@@ -90,6 +90,7 @@ module.exports = {
                 },
                 attributes: ['id', 'issue_title', 'issue_contents', 'progress','category']
             })
+            issueList.unit=null
         }else{
             return undefined
         }
