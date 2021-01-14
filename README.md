@@ -83,6 +83,10 @@ master
 | ----------------------------------------------------------------------------------------- |
 ![image](https://user-images.githubusercontent.com/57162257/104607369-1ae92d80-56c4-11eb-8df2-ee8224485b80.png)
 
+## :carrot Arichitecture
+| Server Arichitecture |
+|------------------------- |
+![image](https://user-images.githubusercontent.com/57162257/104608504-4fa9b480-56c5-11eb-8e2b-11e88899ae0e.png)
 
 ## 🖥 Dependencies module
  
