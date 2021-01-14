@@ -16,6 +16,7 @@ module.exports={
     },
     getNoticeDetail:async(id)=>{
         const notice = await Notice.findOne({where:{id},attributes:{exclude:['createdAt','updatedAt','HouseInfoId']}})
+        console.log('notice!',notice)
         return notice
     },
     setNotice:async(house_info_id,notice_title,notice_contents,notice_option)=>{

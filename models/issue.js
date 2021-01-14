@@ -1,7 +1,7 @@
 const moment = require('moment')
 module.exports = function async (sequelize, DataTypes) {
     return sequelize.define('Issue', {
-        category: { //문의 종류(ex: 고장수리-0/ 계약관련-1/ 요금납부-2/ 소음관련-3/ 문의사항-4/ 그외-5)
+        category: { //문의 종류(ex: 고장수리-0/ 계약관련-1/ 요금납부-2/ 소음관련-3/ 거주수칙관련-4/ 그외-5)
             type: DataTypes.INTEGER,
         },
         issue_title: { //문의 제목
