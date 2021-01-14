@@ -40,6 +40,7 @@ module.exports={
         if(req.files){
             issue_img = req.files.map(files=>files.location)
         }
+        console.log('issue_img!!!!!:',issue_img)
         try{
             const issue_id = await communicationService.setIssueImage(id,issue_img)
             return res.status(statusCode.OK).send(util.success(statusCode.OK,'이미지등록 완료',issue_id))
