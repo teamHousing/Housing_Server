@@ -11,7 +11,7 @@ module.exports = function async (sequelize, DataTypes) {
             type: DataTypes.STRING,
         },
         issue_img: { //문의 이미지
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(1000),
             set: function (val) {
                 return this.setDataValue('issue_img', JSON.stringify(val))
             },
