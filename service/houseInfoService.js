@@ -5,7 +5,9 @@ const moment = require('moment')
 
 module.exports={
     getUnit:async(address)=>{
+        console.log('address!:',address)
         const unitList = await User.findAll({where:{type:1,address:address},attributes:['id','unit','house_info_id']})
+        console.log('unit!:',unitList)
         return unitList
     },
     getHouseInformation:async(id)=>{
@@ -17,7 +19,8 @@ module.exports={
     getNoticeDetail:async(id)=>{
         const notice = await Notice.findOne({where:{id},attributes:{exclude:['createdAt','updatedAt','HouseInfoId']}})
         console.log('notice!',notice)
-        return notice
+        const convertNotice={...notice.dataValues,option:[`${notice.notice_year}. ${notice.notice_month}. ${notice.notice_day}`,`${notice.notice_time}`]}
+        return convertNotice
     },
     setNotice:async(house_info_id,notice_title,notice_contents,notice_option)=>{
         const houseInfo = await HouseInfo.findByPk(house_info_id)
