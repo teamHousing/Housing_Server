@@ -33,5 +33,14 @@ module.exports={
             const newNotice = await Notice.create({notice_title,notice_contents,notice_year:year,notice_month:month,notice_day:date,notice_time:v.time})
             await houseInfo.addNotice(newNotice) 
         })
+    },
+    deleteNotice:async(notice_id,id)=>{
+        console.log(notice_id,  id)
+        const thisUser = await User.findOne({where:{id:id}})
+        console.log('thisUser!!:',thisUser)
+        const house_info_id = (thisUser).house_info_id
+        console.log('house id:',house_info_id)
+        const deleteCheck = await Notice.destroy({where:{id:notice_id,house_info_id:house_info_id}})
+        return deleteCheck
     }
 }

@@ -57,5 +57,16 @@ module.exports = {
     },
     deleteNotice:async(req,res)=>{
         const {notice_id} = req.params
+        const {id} = req.decoded
+        try{
+            const isDelete = await houseInfoService.deleteNotice(notice_id,id)
+            console.log('isDelete??:',isDelete)
+            if(!isDelete){
+                return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,"삭제할 값이 없거나 삭제 권한이 없습니다."))
+            }
+            return res.status(statusCode.OK).send(util.success(statusCode.OK,"공지사항 삭제 성공"))
+        }catch(err){
+            return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,"공지사항 삭제 실패"))
+        }
     }
 }
