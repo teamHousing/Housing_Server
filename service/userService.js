@@ -42,8 +42,8 @@ module.exports = {
         await houseInfo.addUser(user)
       } else {
         const newHouseInfo = await HouseInfo.create({
-          profile_message:"서로를 위해 조금만 조용히~ 오놀도 행복한 하루 :)",
-          profile_img:"https://sopt-27-jinho.s3.ap-northeast-2.amazonaws.com/images/origin/1609531036436.JPG",
+          profile_message:"서로를 위해 조금만 조용히~ 오늘도 행복한 하루^^",
+          profile_img:"https://sopt-27-jinho.s3.ap-northeast-2.amazonaws.com/images/origin/1610722136662.jpg",
           hope_time:["11:00","20:00"],
           response_time:"5분 이내",
           owner_name:user_name
