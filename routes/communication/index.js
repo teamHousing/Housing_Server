@@ -16,4 +16,6 @@ router.get('/:id/request/promise-option',authUtil.onlyOwner,communicationControl
 router.put('/:id/promise-option',authUtil.onlyTenant,communicationController.modifyPromiseOption)//약속수정하기(학생)
 router.get('/:id/complete/promise',authUtil.onlyTenant,communicationController.completePromise)//해결완료(학생)
 
+router.delete('/promise/:issue_id',authUtil.onlyTenant,communicationController.deleteIssue)//요청취소
+
 module.exports=router
