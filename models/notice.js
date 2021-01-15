@@ -4,7 +4,7 @@ module.exports=function async(sequelize,DataTypes){
             type : DataTypes.STRING
         },
         notice_contents:{
-            type : DataTypes.STRING
+            type : DataTypes.STRING(1000)
         },
         notice_year:{
             type:DataTypes.INTEGER
