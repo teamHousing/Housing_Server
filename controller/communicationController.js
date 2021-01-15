@@ -99,7 +99,7 @@ module.exports={
             return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,'약속시간 리스트 불러오기 실패'))
         }
     },
-    //문의사항 확인
+    //문의사항 확정
     promiseConfirmation:async(req,res)=>{
         const {id} = req.params//issue_id
         const {promise_option} = req.body
