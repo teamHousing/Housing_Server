@@ -225,6 +225,22 @@ module.exports = {
         }catch(err){
             throw err
         }
+    },
+    deleteIssue:async(issue_id,id)=>{
+        try{
+            console.log(issue_id,   id)
+            //const thisIssue = await Issue.findOne({where:{id:JSON.parse(issue_id),user_id:id}})
+            const thisIssue = await Issue.findOne({where:{id:issue_id,user_id:id}})
+            console.log('thisIssue:',thisIssue)
+            if(thisIssue==null){
+                return -1
+            }
+            const checkDelete = await Issue.destroy({where:{id:issue_id}})
+            console.log('delete확인:',checkDelete)
+            return checkDelete
+        }catch(err){
+            throw err
+        }
     }
 }
 

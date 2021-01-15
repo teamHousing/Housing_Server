@@ -54,5 +54,8 @@ module.exports = {
             console.error(err)
             return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,"공지사항 작성하기 실패"))
         }
+    },
+    deleteNotice:async(req,res)=>{
+        const {notice_id} = req.params
     }
 }

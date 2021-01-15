@@ -76,6 +76,7 @@ module.exports={
     setPromiseOption:async(req,res)=>{
         const {id}=req.params // 문의사항id
         const {promise_option} = req.body
+        if(promise_option)
         try{
             const promise_option_check = await communicationService.setPromiseOption(id,promise_option)
             if(promise_option_check==0){
@@ -142,6 +143,21 @@ module.exports={
         }catch(err){
             console.error(err)
             return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,"문의 해결완료 실패"))
+        }
+    },
+    deleteIssue:async(req,res)=>{//문의사항 취소
+        const {issue_id} = req.params
+        const {id} = req.decoded
+        try{
+            const isDelete = await communicationService.deleteIssue(issue_id,id)
+            console.log('isDelete??:', isDelete)
+            if(isDelete==-1){
+                return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST,"삭제 권한이 없는 사용자입니다."))
+            }
+            return res.status(statusCode.OK).send(util.success(statusCode.OK,"문의사항 삭제 성공"))
+        }catch(err){
+            console.error(err)
+            return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,"문의사항 삭제 실패"))
         }
     }
 }
