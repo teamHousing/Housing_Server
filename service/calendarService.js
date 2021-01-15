@@ -24,7 +24,7 @@ module.exports = {
       var issueList = await Issue.findAll({
         attributes:['id', 'user_id','category', 'solution_method', 'promise_year','promise_month','promise_day', 'issue_title', 'issue_contents', 'promise_time'],
         where:{
-          progress: 1,
+          progress: {[Op.between]:[1,2]},
           house_info_id: house_info_id,
           promise_month: {[Op.and]: {[Op.gte]:1, [Op.lte]: 12}},
         }
@@ -33,7 +33,7 @@ module.exports = {
       var issueList = await Issue.findAll({
         attributes:['id', 'user_id','category', 'solution_method', 'promise_year','promise_month','promise_day', 'issue_title', 'issue_contents', 'promise_time'],
         where:{
-          progress: 1,
+          progress: {[Op.between]:[1,2]},
           user_id: id,
           promise_month: {[Op.and]: {[Op.gte]:1, [Op.lte]: 12}},
         }

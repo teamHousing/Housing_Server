@@ -201,7 +201,12 @@ module.exports = {
             })
             console.log('current user_status:',reply.user_status)
             console.log('current owner_status:',reply.owner_status)
-            const user_status = [...reply.user_status, 1, 2]
+            if(reply.user_status.length==1){
+                var user_status = [1,2]
+            }else{
+                var user_status = [...reply.user_status, 1, 2]
+            }
+            //const user_status = [...reply.user_status, 1, 2]
             const owner_status = [...reply.owner_status, 1]
             const is_update_reply =await Reply.update({
                 user_status,
