@@ -11,6 +11,7 @@ module.exports = {
         id: id,
       }
     })).house_info_id;
+    console.log('house_info_id:',house_info_id)
     const noticeList = await Notice.findAll({
       attributes:['id', 'notice_year','notice_month','notice_day', 'notice_title', 'notice_time'],
       where:{
@@ -38,7 +39,7 @@ module.exports = {
         }
       });
     }
-    
+    console.log('issueList!!!!!:',issueList)
     
     const convertNoticeList = []
     noticeList.map((v,i)=>{
