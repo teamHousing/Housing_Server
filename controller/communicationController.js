@@ -104,6 +104,7 @@ module.exports={
         const {id} = req.params//issue_id
         const {promise_option} = req.body
         try{
+            console.log('lengthTest:',promise_option.length)
             await communicationService.promise_confirmation(id,promise_option)
             return res.status(statusCode.OK).send(util.success(statusCode.OK,'약속확정 성공'))
         }catch(err){

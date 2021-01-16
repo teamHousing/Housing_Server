@@ -201,22 +201,35 @@ module.exports = {
             })
             console.log('current user_status:',reply.user_status)
             console.log('current owner_status:',reply.owner_status)
-            if(reply.user_status.length==1){
-                var user_status = [1,2]
+            if(promise_option.length==0){
+                //약속없는 문의사항 로직작성
+                const user_status=[2]
+                const is_update_reply = await Reply.update({
+                    user_status
+                },{
+                    where:{
+                        issue_id:id
+                    }
+                })
+                console.log('약속없는 문의 문의사항 확인:!!',is_update_reply)
             }else{
-                var user_status = [...reply.user_status, 1, 2]
-            }
-            //const user_status = [...reply.user_status, 1, 2]
-            const owner_status = [...reply.owner_status, 1]
-            const is_update_reply =await Reply.update({
-                user_status,
-                owner_status
-            }, {
-                where: {
-                    issue_id: id
+                if(reply.user_status.length==1){
+                    var user_status = [1,2]
+                }else{
+                    var user_status = [...reply.user_status, 1, 2]
                 }
-            })
-            console.log('is_update_reply:',is_update_reply)
+                //const user_status = [...reply.user_status, 1, 2]
+                const owner_status = [...reply.owner_status, 1]
+                const is_update_reply =await Reply.update({
+                    user_status,
+                    owner_status
+                }, {
+                    where: {
+                        issue_id: id
+                    }
+                })
+                console.log('is_update_reply:',is_update_reply)
+            }
         } catch (err) {
             throw err
         }
